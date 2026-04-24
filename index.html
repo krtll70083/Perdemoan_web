@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DKS - Donat Kentang Syifa | Lembut, Manis, Terjangkau</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #C8410A;
+    --primary-dark: #8B2D07;
+    --accent: #F5A623;
+    --accent-light: #FDD97E;
+    --cream: #FFF8EE;
+    --brown: #3D1A0B;
+    --text: #2C1810;
+    --muted: #8B6B5A;
+    --white: #FFFFFF;
+    --card-bg: #FFFAF4;
+    --shadow: rgba(200,65,10,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(255,248,238,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(200,65,10,0.12);
+    padding: 0 5%;
+    height: 70px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: all 0.3s ease;
+  }
+  nav.scrolled {
+    background: rgba(255,248,238,0.98);
+    box-shadow: 0 4px 30px var(--shadow);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 44px; height: 44px;
+    background: var(--primary);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    transform: rotate(-5deg);
+    transition: transform 0.3s;
+  }
+  .nav-logo-icon:hover { transform: rotate(5deg) scale(1.1); }
+  .nav-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: var(--primary);
+    line-height: 1;
+  }
+  .nav-logo-sub {
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 8px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { background: rgba(200,65,10,0.08); color: var(--primary); }
+  .nav-cta {
+    background: var(--primary) !important;
+    color: var(--white) !important;
+    padding: 8px 20px !important;
+    border-radius: 20px !important;
+  }
+  .nav-cta:hover { background: var(--primary-dark) !important; transform: translateY(-1px); }
+  .hamburger {
+    display: none;
+    flex-direction: column; gap: 5px; cursor: pointer;
+    background: none; border: none; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--text); border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    padding: 70px 5% 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(245,166,35,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '🍩';
+    position: absolute;
+    font-size: 300px;
+    right: -60px; top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.04;
+    pointer-events: none;
+    animation: float 8s ease-in-out infinite;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(200,65,10,0.1);
+    border: 1px solid rgba(200,65,10,0.2);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before { content: '⭐'; }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-title span {
+    color: var(--primary);
+    position: relative;
+  }
+  .hero-title span::after {
+    content: '';
+    position: absolute; bottom: 4px; left: 0; right: 0;
+    height: 6px;
+    background: var(--accent-light);
+    z-index: -1;
+    border-radius: 3px;
+  }
+  .hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 36px;
+    max-width: 480px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.25s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 30px var(--shadow); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 2px solid rgba(61,26,11,0.2);
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.25s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-secondary:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex; gap: 40px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(61,26,11,0.08);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--primary);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .hero-visual {
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .donut-showcase {
+    width: 420px; height: 420px;
+    background: linear-gradient(135deg, #FFF0DC 0%, #FFE0B8 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(200,65,10,0.2);
+    animation: float 6s ease-in-out infinite;
+  }
+  .donut-main {
+    font-size: 180px;
+    filter: drop-shadow(0 20px 30px rgba(200,65,10,0.3));
+    animation: spin-slow 20s linear infinite;
+  }
+  .donut-float {
+    position: absolute;
+    animation: orbit 8s linear infinite;
+  }
+  .donut-float:nth-child(2) { top: 10%; right: 5%; font-size: 52px; animation-delay: 0s; }
+  .donut-float:nth-child(3) { bottom: 15%; left: 0%; font-size: 38px; animation-delay: -3s; }
+  .donut-float:nth-child(4) { top: 55%; right: -5%; font-size: 30px; animation-delay: -5s; }
+  .price-badge {
+    position: absolute;
+    bottom: 20px; right: -20px;
+    background: var(--primary);
+    color: white;
+    border-radius: 20px;
+    padding: 14px 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px var(--shadow);
+    animation: pulse-badge 2s ease-in-out infinite;
+  }
+  .price-badge .amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    display: block;
+    line-height: 1;
+  }
+  .price-badge .per {
+    font-size: 0.72rem;
+    opacity: 0.85;
+    font-weight: 500;
+  }
+  .rating-badge {
+    position: absolute;
+    top: 30px; left: -10px;
+    background: white;
+    border-radius: 14px;
+    padding: 10px 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rating-badge .stars { color: var(--accent); font-size: 0.85rem; }
+  .rating-badge .score { font-weight: 700; font-size: 0.9rem; }
+  .rating-badge .reviews { font-size: 0.72rem; color: var(--muted); }
+
+  /* ===== MARQUEE ===== */
+  .marquee-section {
+    background: var(--primary);
+    padding: 16px 0;
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    color: white;
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 0 32px;
+    opacity: 0.9;
+    display: flex; align-items: center; gap: 12px;
+    flex-shrink: 0;
+  }
+  .marquee-dot { color: var(--accent); font-size: 1.2rem; }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 80px 5%; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+  .section-label::before { content: ''; width: 24px; height: 2px; background: var(--primary); border-radius: 2px; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+  .section-header { margin-bottom: 56px; }
+  .section-header.center { text-align: center; }
+  .section-header.center .section-label { justify-content: center; }
+  .section-header.center .section-desc { margin: 0 auto; }
+
+  /* ===== MENU ===== */
+  #menu { background: var(--white); }
+  .menu-tabs {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 40px;
+    justify-content: center;
+  }
+  .tab-btn {
+    padding: 10px 24px;
+    border-radius: 24px;
+    border: 2px solid rgba(200,65,10,0.2);
+    background: transparent;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+  }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .menu-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(200,65,10,0.08);
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+  }
+  .menu-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px var(--shadow); }
+  .menu-card-img {
+    background: linear-gradient(135deg, #FFE8CC, #FFD4A8);
+    height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 90px;
+    position: relative;
+  }
+  .menu-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--primary);
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .menu-badge.new { background: #10B981; }
+  .menu-badge.hot { background: var(--accent); color: var(--brown); }
+  .menu-card-body { padding: 18px; }
+  .menu-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .menu-card-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
+  .menu-card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .menu-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--primary);
+  }
+  .add-btn {
+    width: 36px; height: 36px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .add-btn:hover { background: var(--primary-dark); transform: scale(1.1); }
+
+  /* ===== ABOUT ===== */
+  #tentang {
+    background: linear-gradient(135deg, var(--brown) 0%, #5C2D0E 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  #tentang::before {
+    content: '🍩';
+    position: absolute; right: -50px; bottom: -50px;
+    font-size: 400px; opacity: 0.04; pointer-events: none;
+  }
+  #tentang .section-title { color: white; }
+  #tentang .section-label { color: var(--accent); }
+  #tentang .section-label::before { background: var(--accent); }
+  #tentang .section-desc { color: rgba(255,255,255,0.7); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .about-story p {
+    color: rgba(255,255,255,0.75);
+    line-height: 1.8;
+    margin-bottom: 18px;
+    font-size: 0.97rem;
+  }
+  .about-highlight {
+    background: rgba(245,166,35,0.15);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 0 12px 12px 0;
+    margin: 24px 0;
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    color: var(--accent-light);
+  }
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .value-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.3s;
+  }
+  .value-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-3px); }
+  .value-icon { font-size: 1.8rem; margin-bottom: 10px; }
+  .value-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
+  .value-desc { font-size: 0.82rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+  /* ===== OUTLETS ===== */
+  #outlet { background: var(--cream); }
+  .outlet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .outlet-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 28px;
+    border: 1px solid rgba(200,65,10,0.1);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .outlet-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--primary);
+  }
+  .outlet-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px var(--shadow); }
+  .outlet-city {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .outlet-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #10B981;
+    margin-bottom: 16px;
+  }
+  .outlet-status::before { content: ''; width: 7px; height: 7px; background: #10B981; border-radius: 50%; animation: pulse-dot 1.5s ease-in-out infinite; }
+  .outlet-address {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 14px;
+    display: flex; gap: 8px;
+  }
+  .outlet-hours {
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 16px;
+  }
+  .outlet-apps {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .app-tag {
+    padding: 5px 12px;
+    background: rgba(200,65,10,0.08);
+    color: var(--primary);
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .outlet-map-btn {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    padding: 10px;
+    border: 2px solid rgba(200,65,10,0.2);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .outlet-map-btn:hover { background: var(--primary); color: white; }
+
+  /* ===== MITRA / FRANCHISE ===== */
+  #mitra {
+    background: linear-gradient(135deg, #FFF5E8 0%, #FFE8CC 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .mitra-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .mitra-benefits {
+    display: flex; flex-direction: column; gap: 16px;
+    margin: 32px 0;
+  }
+  .benefit-row {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    border: 1px solid rgba(200,65,10,0.08);
+    transition: all 0.3s;
+  }
+  .benefit-row:hover { transform: translateX(6px); box-shadow: 0 8px 24px var(--shadow); }
+  .benefit-icon {
+    width: 46px; height: 46px;
+    background: rgba(200,65,10,0.1);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .benefit-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+  .benefit-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+
+  /* ===== FORM MITRA ===== */
+  .mitra-form-wrapper {
+    background: white;
+    border-radius: 24px;
+    padding: 36px;
+    box-shadow: 0 20px 60px var(--shadow);
+    position: sticky;
+    top: 90px;
+  }
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+  .form-subtitle { font-size: 0.85rem; color: var(--muted); margin-bottom: 28px; }
+  .form-group { margin-bottom: 18px; }
+  .form-label {
+    display: block;
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 7px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid rgba(200,65,10,0.15);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: var(--text);
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    outline: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(200,65,10,0.1);
+  }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.25s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .submit-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 30px var(--shadow); }
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 24px;
+  }
+  .form-success .success-icon { font-size: 3rem; margin-bottom: 12px; }
+  .form-success h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 8px; }
+  .form-success p { font-size: 0.88rem; color: var(--muted); }
+
+  /* ===== TESTIMONIALS ===== */
+  #testimoni { background: white; }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .testi-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 28px;
+    border: 1px solid rgba(200,65,10,0.08);
+    position: relative;
+    transition: all 0.3s;
+  }
+  .testi-card:hover { transform: translateY(-4px); box-shadow: 0 12px 35px var(--shadow); }
+  .testi-quote {
+    font-size: 2.5rem;
+    color: var(--accent);
+    font-family: 'Playfair Display', serif;
+    line-height: 0.8;
+    margin-bottom: 16px;
+  }
+  .testi-text {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  .testi-footer { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700; font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .testi-name { font-weight: 700; font-size: 0.9rem; }
+  .testi-loc { font-size: 0.78rem; color: var(--muted); }
+  .testi-stars { color: var(--accent); font-size: 0.85rem; margin-top: 2px; }
+
+  /* ===== GALLERY ===== */
+  #galeri { background: var(--cream); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    gap: 16px;
+  }
+  .gallery-item {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .gallery-item:first-child { grid-column: span 2; grid-row: span 2; }
+  .gallery-img {
+    width: 100%; height: 100%;
+    min-height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px;
+    transition: transform 0.4s ease;
+  }
+  .gallery-item:first-child .gallery-img { font-size: 120px; min-height: 360px; }
+  .gallery-item:hover .gallery-img { transform: scale(1.08); }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(61,26,11,0.7), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 16px;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay span { color: white; font-size: 0.85rem; font-weight: 600; }
+  .g-bg-1 { background: linear-gradient(135deg, #FFE8CC, #FFD0A0); }
+  .g-bg-2 { background: linear-gradient(135deg, #FCE4D8, #F9C9B5); }
+  .g-bg-3 { background: linear-gradient(135deg, #FFF0CC, #FFE2A0); }
+  .g-bg-4 { background: linear-gradient(135deg, #FFD8CC, #FFC4A8); }
+  .g-bg-5 { background: linear-gradient(135deg, #E8F4FF, #C8E4FF); }
+
+  /* ===== FAQ ===== */
+  #faq { background: white; }
+  .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid rgba(200,65,10,0.1);
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 20px 24px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .faq-question:hover { color: var(--primary); }
+  .faq-icon {
+    width: 28px; height: 28px;
+    background: rgba(200,65,10,0.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: all 0.3s;
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .faq-item.open .faq-icon { background: var(--primary); color: white; transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+  }
+  .faq-answer-inner {
+    padding: 0 24px 20px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .faq-item.open .faq-answer { max-height: 300px; }
+
+  /* ===== CTA SECTION ===== */
+  .cta-section {
+    background: var(--primary);
+    padding: 80px 5%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '🍩';
+    position: absolute; left: 5%; top: 50%; transform: translateY(-50%);
+    font-size: 200px; opacity: 0.07;
+  }
+  .cta-section::after {
+    content: '🍩';
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    font-size: 200px; opacity: 0.07;
+  }
+  .cta-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    color: white;
+    margin-bottom: 16px;
+  }
+  .cta-section p { color: rgba(255,255,255,0.8); font-size: 1.05rem; margin-bottom: 36px; }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-white {
+    background: white;
+    color: var(--primary);
+    border: none;
+    padding: 15px 36px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.25s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-white:hover { background: var(--accent-light); transform: translateY(-2px); }
+  .btn-outline-white {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+    padding: 13px 32px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.25s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--brown);
+    color: rgba(255,255,255,0.8);
+    padding: 60px 5% 30px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+  .footer-brand .nav-logo-text { color: var(--accent-light); font-size: 1.8rem; }
+  .footer-brand .nav-logo-sub { color: rgba(255,255,255,0.5); }
+  .footer-brand p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    margin: 16px 0;
+  }
+  .social-links { display: flex; gap: 10px; }
+  .social-btn {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+  .social-btn:hover { background: var(--primary); transform: translateY(-2px); }
+  .footer-col h4 {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: white;
+    margin-bottom: 18px;
+    letter-spacing: 0.04em;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: var(--accent); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 0.82rem; color: rgba(255,255,255,0.45); }
+
+  /* ===== WHATSAPP FLOAT ===== */
+  .wa-float {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    width: 58px; height: 58px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+    cursor: pointer;
+    z-index: 999;
+    text-decoration: none;
+    animation: pulse-wa 2s ease-in-out infinite;
+    transition: transform 0.2s;
+  }
+  .wa-float:hover { transform: scale(1.1); animation: none; }
+  .wa-tooltip {
+    position: absolute;
+    right: 68px;
+    background: white;
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 10px;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .wa-float:hover .wa-tooltip { opacity: 1; }
+  .wa-tooltip::after {
+    content: '';
+    position: absolute; left: 100%; top: 50%; transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-left-color: white;
+  }
+
+  /* ===== MOBILE MENU ===== */
+  .mobile-menu {
+    display: none;
+    position: fixed; top: 70px; left: 0; right: 0;
+    background: rgba(255,248,238,0.98);
+    backdrop-filter: blur(16px);
+    padding: 20px 5%;
+    border-bottom: 1px solid rgba(200,65,10,0.12);
+    z-index: 999;
+    flex-direction: column; gap: 4px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 12px 16px;
+    border-radius: 10px;
+    transition: all 0.2s;
+  }
+  .mobile-menu a:hover { background: rgba(200,65,10,0.08); color: var(--primary); }
+  .mobile-menu .nav-cta {
+    background: var(--primary) !important;
+    color: white !important;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+  }
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes orbit {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-12px) scale(1.1); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes pulse-badge {
+    0%, 100% { box-shadow: 0 10px 30px var(--shadow); }
+    50% { box-shadow: 0 10px 40px rgba(200,65,10,0.4); }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.8); }
+  }
+  @keyframes pulse-wa {
+    0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 6px 40px rgba(37,211,102,0.7); }
+  }
+
+  /* ===== REVEAL ON SCROLL ===== */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+    .gallery-item:first-child { grid-column: span 2; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 90px; gap: 32px; }
+    .hero-visual { order: -1; }
+    .hero-desc { margin: 0 auto 32px; }
+    .hero-actions { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .hero::after { display: none; }
+    .donut-showcase { width: 280px; height: 280px; }
+    .donut-main { font-size: 120px; }
+    .about-grid, .mitra-grid { grid-template-columns: 1fr; }
+    .values-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item:first-child { grid-column: span 2; grid-row: span 1; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .price-badge { right: 10px; }
+    .mitra-form-wrapper { position: static; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    section { padding: 60px 5%; }
+    .hero-stats { gap: 20px; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item:first-child { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">🍩</div>
+    <div>
+      <div class="nav-logo-text">DKS</div>
+      <div class="nav-logo-sub">Donat Kentang Syifa</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#tentang">Tentang Kami</a></li>
+    <li><a href="#outlet">Outlet</a></li>
+    <li><a href="#testimoni">Testimoni</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#mitra" class="nav-cta">Jadi Mitra 🤝</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#menu" onclick="closeMobileMenu()">🍩 Menu</a>
+  <a href="#tentang" onclick="closeMobileMenu()">📖 Tentang Kami</a>
+  <a href="#outlet" onclick="closeMobileMenu()">📍 Outlet</a>
+  <a href="#testimoni" onclick="closeMobileMenu()">💬 Testimoni</a>
+  <a href="#galeri" onclick="closeMobileMenu()">📸 Galeri</a>
+  <a href="#faq" onclick="closeMobileMenu()">❓ FAQ</a>
+  <a href="#mitra" class="nav-cta" onclick="closeMobileMenu()">🤝 Jadi Mitra</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-badge">Viral & Terpercaya Sejak 2021</div>
+    <h1 class="hero-title">
+      Donat Kentang<br>
+      <span>Paling Lembut</span><br>
+      se-Sumatera
+    </h1>
+    <p class="hero-desc">
+      Nikmati kelembutan donat kentang premium dengan harga yang ramah di kantong. Rp3.000/pcs — kualitas tak tertandingi, rasa tak terlupakan.
+    </p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">🍩 Lihat Menu</a>
+      <a href="#mitra" class="btn-secondary">🤝 Jadi Mitra</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">15+</span>
+        <span class="stat-label">Outlet Aktif</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">50K+</span>
+        <span class="stat-label">Pelanggan</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">6+</span>
+        <span class="stat-label">Kota</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">4.9★</span>
+        <span class="stat-label">Rating</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="donut-showcase">
+      <div class="donut-float">🍩</div>
+      <div class="donut-float">🍩</div>
+      <div class="donut-float">⭐</div>
+      <div class="donut-main">🍩</div>
+    </div>
+    <div class="price-badge">
+      <span class="amount">Rp3K</span>
+      <span class="per">per donat</span>
+    </div>
+    <div class="rating-badge">
+      <div class="stars">★★★★★</div>
+      <div>
+        <div class="score">4.9/5</div>
+        <div class="reviews">10K+ ulasan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee">
+    <div class="marquee-item"><span class="marquee-dot">🍩</span> Donat Kentang Lembut</div>
+    <div class="marquee-item"><span class="marquee-dot">⭐</span> Rating 4.9 di GoFood</div>
+    <div class="marquee-item"><span class="marquee-dot">🔥</span> Viral di TikTok</div>
+    <div class="marquee-item"><span class="marquee-dot">💛</span> Hanya Rp3.000/pcs</div>
+    <div class="marquee-item"><span class="marquee-dot">📍</span> Kini Hadir di 6+ Kota</div>
+    <div class="marquee-item"><span class="marquee-dot">🤝</span> Buka Program Mitra</div>
+    <div class="marquee-item"><span class="marquee-dot">🍩</span> Donat Kentang Lembut</div>
+    <div class="marquee-item"><span class="marquee-dot">⭐</span> Rating 4.9 di GoFood</div>
+    <div class="marquee-item"><span class="marquee-dot">🔥</span> Viral di TikTok</div>
+    <div class="marquee-item"><span class="marquee-dot">💛</span> Hanya Rp3.000/pcs</div>
+    <div class="marquee-item"><span class="marquee-dot">📍</span> Kini Hadir di 6+ Kota</div>
+    <div class="marquee-item"><span class="marquee-dot">🤝</span> Buka Program Mitra</div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-header center">
+    <div class="section-label">Menu Pilihan</div>
+    <h2 class="section-title">Temukan Rasa Favoritmu</h2>
+    <p class="section-desc">Dari rasa klasik hingga kreasi terkini — semua lembut, semua enak, semua terjangkau.</p>
+  </div>
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="filterMenu('semua', this)">Semua</button>
+    <button class="tab-btn" onclick="filterMenu('klasik', this)">Klasik</button>
+    <button class="tab-btn" onclick="filterMenu('premium', this)">Premium</button>
+    <button class="tab-btn" onclick="filterMenu('isi', this)">Isi Krim</button>
+    <button class="tab-btn" onclick="filterMenu('paket', this)">Paket Hemat</button>
+  </div>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- TENTANG -->
+<section id="tentang">
+  <div class="about-grid">
+    <div class="about-story">
+      <div class="section-label">Kisah Kami</div>
+      <h2 class="section-title">Dari Dapur Kecil ke Seluruh Sumatera</h2>
+      <p>Donat Kentang Syifa lahir dari sebuah mimpi sederhana — menghadirkan donat berkualitas tinggi yang bisa dinikmati semua kalangan. Dimulai dari dapur kecil di Medan, kami meracik donat dari kentang pilihan yang menghasilkan tekstur luar biasa lembut.</p>
+      <div class="about-highlight">
+        "Donat murah bukan berarti donat murahan — kami buktikan dengan setiap gigitan."
+      </div>
+      <p>Kini DKS telah hadir di lebih dari 6 kota dengan 15+ outlet aktif, melayani puluhan ribu pelanggan setia setiap bulannya. Perjalanan kami baru dimulai — dan kami ingin kamu menjadi bagian dari cerita ini.</p>
+      <div style="margin-top:32px">
+        <a href="#mitra" class="btn-primary">🤝 Bergabung Bersama Kami</a>
+      </div>
+    </div>
+    <div class="values-grid reveal">
+      <div class="value-card">
+        <div class="value-icon">🌾</div>
+        <div class="value-title">Bahan Pilihan</div>
+        <div class="value-desc">Kentang segar berkualitas tinggi dipilih setiap hari untuk menjaga kelembutan donat kami.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">💰</div>
+        <div class="value-title">Harga Terjangkau</div>
+        <div class="value-desc">Rp3.000/pcs — harga yang bersahabat tanpa mengorbankan kualitas rasa.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🔥</div>
+        <div class="value-title">Selalu Fresh</div>
+        <div class="value-desc">Dibuat fresh setiap hari. Tidak ada donat basi — semua ludes sebelum tutup!</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">❤️</div>
+        <div class="value-title">Dibuat dengan Cinta</div>
+        <div class="value-desc">Setiap donat dibuat dengan penuh kasih sayang oleh tim kami yang berpengalaman.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🏆</div>
+        <div class="value-title">Viral & Terpercaya</div>
+        <div class="value-desc">Rating 4.9/5 di semua platform. Ribuan ulasan positif dari pelanggan setia.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🚀</div>
+        <div class="value-title">Terus Berkembang</div>
+        <div class="value-desc">Ekspansi ke seluruh Sumatera dan Indonesia. Bergabunglah dalam perjalanan ini.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTLET -->
+<section id="outlet">
+  <div class="section-header center">
+    <div class="section-label">Lokasi Kami</div>
+    <h2 class="section-title">Temukan Outlet DKS Terdekat</h2>
+    <p class="section-desc">Kini DKS sudah hadir di berbagai kota. Cek outlet terdekat dan langsung order!</p>
+  </div>
+  <div class="outlet-grid" id="outletGrid"></div>
+</section>
+
+<!-- MITRA / FRANCHISE -->
+<section id="mitra">
+  <div class="mitra-grid">
+    <div>
+      <div class="section-label">Program Kemitraan</div>
+      <h2 class="section-title">Mulai Bisnis DKS di Kotamu!</h2>
+      <p class="section-desc">Jadilah bagian dari keluarga besar DKS. Kami siapkan sistem, dukungan, dan brand yang sudah terbukti viral!</p>
+      <div class="mitra-benefits">
+        <div class="benefit-row reveal">
+          <div class="benefit-icon">📋</div>
+          <div>
+            <div class="benefit-title">SOP & Pelatihan Lengkap</div>
+            <div class="benefit-desc">Kami sediakan panduan operasional lengkap dan pelatihan langsung dari tim pusat agar bisnis kamu berjalan mulus.</div>
+          </div>
+        </div>
+        <div class="benefit-row reveal reveal-delay-1">
+          <div class="benefit-icon">🎨</div>
+          <div>
+            <div class="benefit-title">Paket Branding Siap Pakai</div>
+            <div class="benefit-desc">Desain outlet, packaging, dan materi promosi sudah disiapkan. Kamu tinggal buka dan jalankan!</div>
+          </div>
+        </div>
+        <div class="benefit-row reveal reveal-delay-2">
+          <div class="benefit-icon">📦</div>
+          <div>
+            <div class="benefit-title">Supply Bahan Terjamin</div>
+            <div class="benefit-desc">Bahan baku dikirim secara rutin dari pusat untuk memastikan kualitas donat selalu konsisten di setiap outlet.</div>
+          </div>
+        </div>
+        <div class="benefit-row reveal reveal-delay-3">
+          <div class="benefit-icon">📱</div>
+          <div>
+            <div class="benefit-title">Dukungan Marketing Digital</div>
+            <div class="benefit-desc">Tim kami bantu promosikan outlet kamu lewat media sosial, GoFood, GrabFood, dan ShopeeFood.</div>
+          </div>
+        </div>
+        <div class="benefit-row reveal">
+          <div class="benefit-icon">💹</div>
+          <div>
+            <div class="benefit-title">ROI Cepat & Terbukti</div>
+            <div class="benefit-desc">Dengan margin yang menarik dan permintaan yang tinggi, investasi kamu berpotensi kembali dalam waktu singkat.</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top: 8px;">
+        <div style="background:white;border:1px solid rgba(200,65,10,0.15);border-radius:14px;padding:16px 20px;text-align:center;flex:1;min-width:120px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--primary)">Rp15jt</div>
+          <div style="font-size:0.78rem;color:var(--muted);font-weight:500">Investasi Awal*</div>
+        </div>
+        <div style="background:white;border:1px solid rgba(200,65,10,0.15);border-radius:14px;padding:16px 20px;text-align:center;flex:1;min-width:120px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--primary)">3-6 Bln</div>
+          <div style="font-size:0.78rem;color:var(--muted);font-weight:500">Estimasi BEP</div>
+        </div>
+        <div style="background:white;border:1px solid rgba(200,65,10,0.15);border-radius:14px;padding:16px 20px;text-align:center;flex:1;min-width:120px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--primary)">30%+</div>
+          <div style="font-size:0.78rem;color:var(--muted);font-weight:500">Margin Bersih</div>
+        </div>
+      </div>
+      <p style="font-size:0.75rem;color:var(--muted);margin-top:10px">*Estimasi, tergantung lokasi dan skala outlet. Hubungi kami untuk detail.</p>
+    </div>
+
+    <!-- FORM -->
+    <div class="mitra-form-wrapper" id="mitraForm">
+      <div class="form-title">Daftar Jadi Mitra 🤝</div>
+      <div class="form-subtitle">Isi formulir di bawah dan tim kami akan menghubungi kamu dalam 1x24 jam.</div>
+      <div id="formContent">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nama Lengkap *</label>
+            <input type="text" class="form-input" id="namaLengkap" placeholder="Nama kamu">
+          </div>
+          <div class="form-group">
+            <label class="form-label">No. WhatsApp *</label>
+            <input type="text" class="form-input" id="noWa" placeholder="08xxxxxxxxxx">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="email" placeholder="email@kamu.com">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Kota yang Dituju *</label>
+            <input type="text" class="form-input" id="kota" placeholder="Kota rencana buka outlet">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Skala Investasi</label>
+            <select class="form-select" id="investasi">
+              <option value="">Pilih...</option>
+              <option>Di bawah Rp20 juta</option>
+              <option>Rp20 - 50 juta</option>
+              <option>Di atas Rp50 juta</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pengalaman Bisnis</label>
+          <select class="form-select" id="pengalaman">
+            <option value="">Pilih...</option>
+            <option>Belum pernah berbisnis</option>
+            <option>Punya pengalaman 1-2 tahun</option>
+            <option>Sudah berpengalaman 3+ tahun</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ceritakan Motivasimu</label>
+          <textarea class="form-textarea" id="motivasi" placeholder="Kenapa kamu tertarik bermitra dengan DKS?"></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitForm()">
+          Kirim Pendaftaran 🚀
+        </button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">🎉</div>
+        <h3>Pendaftaran Terkirim!</h3>
+        <p>Terima kasih! Tim DKS akan menghubungi kamu di nomor WhatsApp yang didaftarkan dalam 1x24 jam. Selamat bergabung di keluarga DKS!</p>
+        <div style="margin-top:20px">
+          <a href="https://wa.me/6281360091047" target="_blank" class="btn-primary" style="display:inline-flex">💬 Chat via WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONI -->
+<section id="testimoni">
+  <div class="section-header center">
+    <div class="section-label">Kata Mereka</div>
+    <h2 class="section-title">Ribuan Pelanggan Sudah Buktikan!</h2>
+    <p class="section-desc">Jangan percaya kata kami — dengarkan langsung dari pelanggan setia DKS.</p>
+  </div>
+  <div class="testimonials-grid" id="testiGrid"></div>
+</section>
+
+<!-- GALLERY -->
+<section id="galeri">
+  <div class="section-header center">
+    <div class="section-label">Galeri</div>
+    <h2 class="section-title">Semua Enak, Semua Fotogenik!</h2>
+    <p class="section-desc">Donat DKS nggak cuma enak di mulut, tapi juga cantik di kamera.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="gallery-img g-bg-1" style="background:linear-gradient(135deg,#FFE4CC,#FFC896)">🍩</div>
+      <div class="gallery-overlay"><span>Signature Donut DKS</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-img g-bg-2">🍫</div>
+      <div class="gallery-overlay"><span>Topping Coklat Premium</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-img g-bg-3">🍵</div>
+      <div class="gallery-overlay"><span>Matcha Green Tea</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-img g-bg-4">🍓</div>
+      <div class="gallery-overlay"><span>Strawberry Glaze</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-img g-bg-5">📦</div>
+      <div class="gallery-overlay"><span>Packaging Premium</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-header center">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Pertanyaan yang Sering Ditanyakan</h2>
+    <p class="section-desc">Ada yang masih penasaran? Kami jawab semua di sini!</p>
+  </div>
+  <div class="faq-list" id="faqList"></div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Siap Menjadi Bagian dari DKS?</h2>
+  <p>Bergabunglah sebagai mitra atau pelanggan setia — kami tunggu kamu!</p>
+  <div class="cta-buttons">
+    <a href="#mitra" class="btn-white">🤝 Daftar Jadi Mitra</a>
+    <a href="https://wa.me/6281360091047" target="_blank" class="btn-outline-white">💬 Hubungi Kami</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" style="margin-bottom:16px;display:inline-flex">
+        <div class="nav-logo-icon">🍩</div>
+        <div>
+          <div class="nav-logo-text">DKS</div>
+          <div class="nav-logo-sub">Donat Kentang Syifa</div>
+        </div>
+      </a>
+      <p>Donat kentang paling lembut se-Sumatera. Dibuat dengan bahan pilihan, dijual dengan harga bersahabat, dimakan dengan senyuman.</p>
+      <div class="social-links">
+        <a href="#" class="social-btn" title="Instagram">📷</a>
+        <a href="#" class="social-btn" title="TikTok">🎵</a>
+        <a href="https://wa.me/6281360091047" class="social-btn" title="WhatsApp">💬</a>
+        <a href="#" class="social-btn" title="Facebook">📘</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Menu</h4>
+      <ul>
+        <li><a href="#menu">Donat Klasik</a></li>
+        <li><a href="#menu">Donat Premium</a></li>
+        <li><a href="#menu">Donat Isi Krim</a></li>
+        <li><a href="#menu">Paket Hemat</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Perusahaan</h4>
+      <ul>
+        <li><a href="#tentang">Tentang Kami</a></li>
+        <li><a href="#outlet">Outlet</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+        <li><a href="#mitra">Program Mitra</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontak</h4>
+      <ul>
+        <li><a href="https://wa.me/6281360091047">📱 081360091047</a></li>
+        <li><a href="#">📧 dks@email.com</a></li>
+        <li><a href="#">📍 Jl. Setiabudi No.75, Medan</a></li>
+        <li><a href="#">⏰ 09.00 – 21.30 WIB</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Donat Kentang Syifa (DKS). Semua Hak Dilindungi.</p>
+    <p>Dibuat dengan ❤️ untuk DKS</p>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/6281360091047" target="_blank" class="wa-float" title="Chat WhatsApp">
+  <div class="wa-tooltip">Pesan Sekarang!</div>
+  💬
+</a>
+
+<script>
+// ===== DATA =====
+const menuData = [
+  { name: 'Original Classic', desc: 'Donat kentang polos lembut dengan gula halus — rasa aslinya tak tertandingi.', price: 'Rp3.000', emoji: '🍩', badge: '', cat: 'klasik' },
+  { name: 'Coklat Meses', desc: 'Donat kentang dengan glasir coklat susu dan taburan meses warna-warni.', price: 'Rp3.000', emoji: '🍫', badge: 'hot', cat: 'klasik' },
+  { name: 'Strawberry Glaze', desc: 'Manisnya glasir strawberry segar dengan topping sprinkle merah muda.', price: 'Rp3.000', emoji: '🍓', badge: '', cat: 'klasik' },
+  { name: 'Matcha Oreo', desc: 'Perpaduan unik matcha Jepang dengan remahan Oreo yang renyah di atas.', price: 'Rp3.500', emoji: '🍵', badge: 'new', cat: 'premium' },
+  { name: 'Taro Purple', desc: 'Warna ungu cantik dari taro asli dengan rasa creamy yang khas.', price: 'Rp3.500', emoji: '💜', badge: 'new', cat: 'premium' },
+  { name: 'Red Velvet', desc: 'Donat merah elegan dengan cream cheese frosting — mewah di setiap gigitan.', price: 'Rp4.000', emoji: '❤️', badge: '', cat: 'premium' },
+  { name: 'Krim Vanilla', desc: 'Donat lembut berisi krim vanilla yang berlimpah — bikin ketagihan!', price: 'Rp3.500', emoji: '🥛', badge: 'hot', cat: 'isi' },
+  { name: 'Krim Coklat', desc: 'Isian coklat ganache lumer yang langsung meleleh di lidah.', price: 'Rp3.500', emoji: '🍮', badge: '', cat: 'isi' },
+  { name: 'Paket 6 Pcs', desc: 'Pilih 6 donat favoritmu dengan harga spesial — cocok untuk nongkrong!', price: 'Rp18.000', emoji: '📦', badge: 'hot', cat: 'paket' },
+  { name: 'Paket 12 Pcs', desc: 'Satu lusin donat pilihan untuk acara atau hantaran istimewa.', price: 'Rp34.000', emoji: '🎁', badge: '', cat: 'paket' },
+  { name: 'Paket Party 24 Pcs', desc: 'Dua lusin donat aneka rasa — sempurna untuk pesta, arisan, atau kantor.', price: 'Rp65.000', emoji: '🎉', badge: '', cat: 'paket' },
+  { name: 'Bluberry Cheese', desc: 'Glasir blueberry manis dengan taburan keju parut yang gurih di atasnya.', price: 'Rp3.500', emoji: '🫐', badge: 'new', cat: 'premium' },
+];
+
+const outletData = [
+  { city: 'Medan', address: 'Jl. Setiabudi No.75, Tanjung Rejo, Medan Sunggal', hours: '09.00 – 21.30 WIB', wa: '081360091047', apps: ['GoFood', 'GrabFood', 'ShopeeFood'], maps: 'https://maps.google.com' },
+  { city: 'Pematang Siantar', address: 'Jl. Gereja, Samping Indomaret, Siantar Selatan', hours: '09.00 – 21.00 WIB', wa: '08123456789', apps: ['GoFood', 'GrabFood'], maps: 'https://maps.google.com' },
+  { city: 'Bireuen', address: 'Jl. Kol. Husein Yusuf, Seberang Kantor Pos, Bireuen', hours: '09.00 – 21.30 WIB', wa: '082163874578', apps: ['GoFood', 'ShopeeFood'], maps: 'https://maps.google.com' },
+  { city: 'Langsa', address: 'Jl. Ahmad Yani No.38, Depan Hotel Harmoni, Langsa', hours: '09.00 – 21.30 WIB', wa: '082162961618', apps: ['GoFood', 'GrabFood', 'ShopeeFood'], maps: 'https://maps.google.com' },
+  { city: 'Lubuk Pakam', address: 'Jl. Dr. Sutomo No.192, Sebelah Kantin Siang Malam', hours: '09.00 – 21.30 WIB', wa: '082136436544', apps: ['GoFood', 'GrabFood'], maps: 'https://maps.google.com' },
+  { city: 'Kisaran', address: 'Jl. Imam Bonjol, Dekat Tugu Pahlawan, Kisaran', hours: '09.00 – 21.30 WIB', wa: '082374717598', apps: ['GoFood'], maps: 'https://maps.google.com' },
+];
+
+const testiData = [
+  { name: 'Rahma A.', loc: 'Medan', text: 'Serius ini donat paling enak yang pernah aku makan! Harganya murah banget tapi rasa dan teksturnya mewah. Setiap hari beli minimal 6 pcs. Nggak ada duanya!', stars: 5, initial: 'R' },
+  { name: 'Budi S.', loc: 'Siantar', text: 'Antre panjang tapi worth it banget. Donatnya lembut, fresh, dan nggak bikin enek. Anak-anak suka banget apalagi yang isi krim vanila. Top!', stars: 5, initial: 'B' },
+  { name: 'Sari M.', loc: 'Bireuen', text: 'Sudah jadi langganan sejak outlet buka di sini. Konsistensinya terjaga — rasa selalu enak setiap kali beli. Harga pun nggak naik-naik. Recommended!', stars: 5, initial: 'S' },
+  { name: 'Rizky F.', loc: 'Langsa', text: 'DKS itu level-nya udah kayak donat brand besar tapi harganya JAUH lebih murah. Matcha Oreo-nya favorit aku. Semoga cepat hadir di lebih banyak kota!', stars: 5, initial: 'R' },
+  { name: 'Dina H.', loc: 'Medan', text: 'Sering beli untuk hantaran ke kantor dan semua suka! Packaging-nya rapi, donatnya tahan lama tidak cepat keras. DKS emang nggak pernah mengecewakan.', stars: 5, initial: 'D' },
+  { name: 'Andi P.', loc: 'Lubuk Pakam', text: 'Kalau pagi hari beli, siap-siap antri. Tapi tetap setia karena rasanya emang beda. Coklat Meses dan Original adalah duo favorit keluarga kami!', stars: 5, initial: 'A' },
+];
+
+const faqData = [
+  { q: 'Berapa harga donat DKS?', a: 'Donat DKS dijual mulai Rp3.000/pcs untuk varian klasik, dan Rp3.500–4.000/pcs untuk varian premium. Tersedia juga paket hemat mulai dari Rp18.000 untuk 6 pcs.' },
+  { q: 'Apakah DKS bisa delivery?', a: 'Ya! DKS tersedia di GoFood, GrabFood, dan ShopeeFood di hampir semua outlet. Kamu juga bisa chat langsung via WhatsApp untuk pemesanan dan jadwal ambil.' },
+  { q: 'Bagaimana cara mendaftar jadi mitra DKS?', a: 'Sangat mudah! Isi formulir pendaftaran mitra di website ini, lalu tim kami akan menghubungi kamu dalam 1x24 jam untuk diskusi lebih lanjut tentang syarat dan ketentuan kemitraan.' },
+  { q: 'Berapa modal awal untuk membuka outlet DKS?', a: 'Estimasi investasi awal mulai dari Rp15 juta tergantung lokasi dan skala outlet. Sudah termasuk biaya pelatihan, branding awal, dan supply bahan pertama. Hubungi kami untuk detail lengkap.' },
+  { q: 'Apakah donat DKS menggunakan bahan pengawet?', a: 'Tidak! Semua donat DKS dibuat fresh setiap hari tanpa bahan pengawet. Itulah kenapa donat kami selalu ludes sebelum toko tutup — kualitas dan kesegaran adalah prioritas utama kami.' },
+  { q: 'Apakah bisa pesan donat dalam jumlah besar untuk acara?', a: 'Tentu! Kami melayani pesanan massal untuk acara pernikahan, ulang tahun, seminar, dan korporat. Hubungi outlet terdekat atau WhatsApp kami untuk pemesanan minimal 24 jam sebelumnya.' },
+  { q: 'Di kota mana saja DKS sudah hadir?', a: 'Saat ini DKS sudah hadir di Medan, Pematang Siantar, Bireuen, Langsa, Lubuk Pakam, dan Kisaran — dengan lebih banyak kota menyusul. Pantau terus perkembangan kami di Instagram dan website ini!' },
+];
+
+// ===== RENDER FUNCTIONS =====
+function renderMenu(filter = 'semua') {
+  const grid = document.getElementById('menuGrid');
+  const items = filter === 'semua' ? menuData : menuData.filter(m => m.cat === filter);
+  grid.innerHTML = items.map(item => `
+    <div class="menu-card reveal">
+      <div class="menu-card-img">
+        <span style="font-size:90px">${item.emoji}</span>
+        ${item.badge ? `<div class="menu-badge ${item.badge}">${item.badge === 'new' ? '✨ Baru' : item.badge === 'hot' ? '🔥 Laris' : item.badge}</div>` : ''}
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">${item.name}</div>
+        <div class="menu-card-desc">${item.desc}</div>
+        <div class="menu-card-footer">
+          <span class="menu-price">${item.price}</span>
+          <button class="add-btn" onclick="addToCart('${item.name}')" title="Tambah ke keranjang">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  initReveal();
+}
+
+function renderOutlets() {
+  document.getElementById('outletGrid').innerHTML = outletData.map(o => `
+    <div class="outlet-card reveal">
+      <div class="outlet-city">📍 ${o.city}</div>
+      <div class="outlet-status">Buka Sekarang</div>
+      <div class="outlet-address">🏠 <span>${o.address}</span></div>
+      <div class="outlet-hours">⏰ ${o.hours}</div>
+      <div class="outlet-apps">${o.apps.map(a => `<span class="app-tag">${a}</span>`).join('')}</div>
+      <a href="${o.maps}" target="_blank" class="outlet-map-btn">🗺️ Lihat di Peta</a>
+      <a href="https://wa.me/62${o.wa.replace(/^0/, '')}" target="_blank" style="display:block;text-align:center;margin-top:8px;padding:10px;background:rgba(37,211,102,0.1);border:2px solid rgba(37,211,102,0.3);border-radius:12px;font-size:0.85rem;font-weight:600;color:#1a9e4a;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#25D366';this.style.color='white'" onmouseout="this.style.background='rgba(37,211,102,0.1)';this.style.color='#1a9e4a'">💬 Order via WhatsApp</a>
+    </div>
+  `).join('');
+  initReveal();
+}
+
+function renderTestimonials() {
+  document.getElementById('testiGrid').innerHTML = testiData.map(t => `
+    <div class="testi-card reveal">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">${t.text}</p>
+      <div class="testi-footer">
+        <div class="testi-avatar">${t.initial}</div>
+        <div>
+          <div class="testi-name">${t.name}</div>
+          <div class="testi-loc">📍 ${t.loc}</div>
+          <div class="testi-stars">${'★'.repeat(t.stars)}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  initReveal();
+}
+
+function renderFaq() {
+  document.getElementById('faqList').innerHTML = faqData.map((f, i) => `
+    <div class="faq-item" id="faq${i}">
+      <div class="faq-question" onclick="toggleFaq(${i})">
+        <span>${f.q}</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">${f.a}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== INTERACTIONS =====
+function filterMenu(cat, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMenu(cat);
+}
+
+function toggleFaq(i) {
+  const item = document.getElementById(`faq${i}`);
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+function addToCart(name) {
+  const toast = document.createElement('div');
+  toast.textContent = `🍩 ${name} ditambahkan!`;
+  toast.style.cssText = `
+    position:fixed;bottom:100px;right:28px;
+    background:var(--brown);color:white;
+    padding:12px 20px;border-radius:12px;
+    font-size:0.88rem;font-weight:600;
+    box-shadow:0 8px 24px rgba(0,0,0,0.2);
+    z-index:9999;animation:fadeUp 0.3s ease;
+    max-width:260px;
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => { toast.style.opacity='0'; toast.style.transition='opacity 0.3s'; }, 2000);
+  setTimeout(() => toast.remove(), 2400);
+}
+
+function submitForm() {
+  const nama = document.getElementById('namaLengkap').value.trim();
+  const wa = document.getElementById('noWa').value.trim();
+  const kota = document.getElementById('kota').value.trim();
+  if (!nama || !wa || !kota) {
+    alert('Mohon isi Nama, No. WhatsApp, dan Kota terlebih dahulu.');
+    return;
+  }
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+
+// ===== NAVBAR SCROLL =====
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ===== HAMBURGER =====
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// ===== REVEAL ON SCROLL =====
+function initReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// ===== SMOOTH SCROLL =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+
+// ===== INIT =====
+renderMenu();
+renderOutlets();
+renderTestimonials();
+renderFaq();
+initReveal();
+</script>
+</body>
+</html>
