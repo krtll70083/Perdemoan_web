@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roti Kacang Rajawali – Legenda Kuliner Tebing Tinggi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            amber: { DEFAULT: '#D97706', light: '#F59E0B', dark: '#B45309', pale: '#FEF3C7' },
+            burgundy: { DEFAULT: '#7F1D1D', light: '#991B1B', dark: '#450A0A', pale: '#FEE2E2' },
+            cream: { DEFAULT: '#FDFBF7', dark: '#F5F0E8' },
+          },
+          fontFamily: {
+            playfair: ['"Playfair Display"', 'serif'],
+            poppins: ['Poppins', 'sans-serif'],
+          },
+        }
+      }
+    };
+  </script>
+  <style>
+    * { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background-color: #FDFBF7; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* Animated underline */
+    .animated-underline {
+      position: relative;
+      display: inline-block;
+    }
+    .animated-underline::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 100%; height: 3px;
+      background: #D97706;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .animated-underline:hover::after { transform: scaleX(1); }
+
+    /* Eagle watermark */
+    .eagle-watermark {
+      position: absolute;
+      font-size: 280px;
+      opacity: 0.04;
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    /* Hero gradient */
+    .hero-bg {
+      background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 30%, #B45309 70%, #D97706 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(217,119,6,0.3) 0%, transparent 60%);
+    }
+
+    /* Diagonal divider */
+    .diagonal-bottom {
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    }
+    .diagonal-top {
+      clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
+    }
+
+    /* Pulsing WhatsApp */
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+      50% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
+    }
+    .wa-pulse { animation: pulse-wa 2s ease-in-out infinite; }
+
+    /* Timer glow */
+    @keyframes timer-glow {
+      0%, 100% { text-shadow: 0 0 20px rgba(217,119,6,0.4); }
+      50% { text-shadow: 0 0 40px rgba(217,119,6,0.9), 0 0 60px rgba(217,119,6,0.4); }
+    }
+    .timer-glow { animation: timer-glow 2s ease-in-out infinite; }
+
+    /* Shimmer badge */
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .shimmer-badge {
+      background: linear-gradient(90deg, #D97706 0%, #F59E0B 40%, #FBBF24 50%, #F59E0B 60%, #D97706 100%);
+      background-size: 200% auto;
+      animation: shimmer 3s linear infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Fade-in on scroll */
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Section divider wave */
+    .wave-divider {
+      height: 60px;
+      background: #FDFBF7;
+      clip-path: ellipse(55% 100% at 50% 0%);
+    }
+
+    /* Card hover lift */
+    .card-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(127,29,29,0.15); }
+
+    /* Nav blur */
+    .nav-blur {
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+    }
+
+    /* Pattern bg */
+    .pattern-bg {
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(217,119,6,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(127,29,29,0.06) 0%, transparent 50%);
+    }
+
+    /* Badge status */
+    @keyframes blink-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .blink-dot { animation: blink-dot 1.2s ease-in-out infinite; }
+
+    /* Ornamental lines */
+    .ornament {
+      display: flex; align-items: center; gap: 12px;
+      color: #D97706;
+    }
+    .ornament::before, .ornament::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, transparent, #D97706, transparent);
+    }
+
+    /* Input focus ring */
+    .input-field {
+      border: 2px solid #E5E7EB;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: #D97706;
+      box-shadow: 0 0 0 4px rgba(217,119,6,0.12);
+    }
+
+    /* Scroll indicator */
+    @keyframes bounce-down {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+    .bounce-down { animation: bounce-down 1.5s ease-in-out infinite; }
+
+    /* Stats counter */
+    @keyframes count-up { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Premium ribbon */
+    .ribbon {
+      position: absolute;
+      top: 20px; right: -8px;
+      background: #7F1D1D;
+      color: white;
+      padding: 4px 16px 4px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .ribbon::before {
+      content: '';
+      position: absolute;
+      bottom: -8px; right: 0;
+      border-width: 8px 8px 0 0;
+      border-style: solid;
+      border-color: #450A0A transparent transparent transparent;
+    }
+  </style>
+</head>
+<body class="text-gray-800 overflow-x-hidden">
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 nav-blur" style="background: rgba(127,29,29,0.92);">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-amber flex items-center justify-center text-white font-bold text-xl shadow-lg" style="font-family: 'Playfair Display', serif;">R</div>
+      <div>
+        <div class="text-white font-bold text-sm leading-tight" style="font-family: 'Playfair Display', serif;">Rajawali</div>
+        <div class="text-amber-light text-xs font-light tracking-widest">TEBING TINGGI • EST. 1985</div>
+      </div>
+    </div>
+    <!-- Nav Links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#tracker" class="text-amber-light text-sm font-medium animated-underline hover:text-white transition-colors">Fresh Tracker</a>
+      <a href="#reseller" class="text-amber-light text-sm font-medium animated-underline hover:text-white transition-colors">B2B Reseller</a>
+      <a href="#verifikasi" class="text-amber-light text-sm font-medium animated-underline hover:text-white transition-colors">Verifikasi</a>
+      <a href="https://wa.me/628126346681?text=Halo%20Rajawali%2C%20saya%20ingin%20melakukan%20pemesanan." target="_blank"
+         class="bg-amber text-white text-sm font-semibold px-5 py-2 rounded-full hover:bg-amber-dark transition-all hover:shadow-lg">
+        Pesan Sekarang
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero-bg diagonal-bottom min-h-screen flex items-center pt-20 pb-32">
+  <!-- Decorative eagle watermark -->
+  <div class="eagle-watermark" style="right: -40px; top: 50%; transform: translateY(-50%); color: white;">🦅</div>
+  <div class="eagle-watermark" style="left: -80px; bottom: -20px; color: white; font-size: 200px;">🦅</div>
+
+  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+    <!-- Left: Text -->
+    <div class="relative z-10">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 bg-white bg-opacity-15 backdrop-blur-sm border border-white border-opacity-20 rounded-full px-4 py-2 mb-8">
+        <span class="w-2 h-2 rounded-full bg-green-400 blink-dot"></span>
+        <span class="text-white text-xs font-medium tracking-wider">DAPUR AKTIF • PRODUKSI HARIAN</span>
+      </div>
+
+      <h1 class="text-white text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-6" style="font-family: 'Playfair Display', serif; text-shadow: 0 4px 24px rgba(0,0,0,0.3);">
+        Cita Rasa<br/>
+        <span class="italic text-amber-light">Legendaris</span><br/>
+        Tebing Tinggi,<br/>
+        <span class="text-4xl lg:text-5xl font-bold not-italic">Kini Lebih Dekat.</span>
+      </h1>
+
+      <p class="text-amber-pale text-base lg:text-lg leading-relaxed mb-10 max-w-xl font-light">
+        Warisan kuliner sejak <strong class="text-white font-semibold">1985</strong> — dipanggang segar setiap hari dari bahan pilihan terbaik. Kini hadir dengan sistem pemesanan modern untuk seluruh Nusantara, langsung dari dapur leluhur kami.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-wrap gap-4">
+        <a href="#tracker" class="group bg-amber text-white font-semibold px-8 py-4 rounded-full text-base hover:bg-amber-light transition-all hover:shadow-2xl hover:scale-105 flex items-center gap-2">
+          <span>🔥</span>
+          Lihat Status Dapur
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#reseller" class="group bg-white bg-opacity-10 border-2 border-white border-opacity-40 text-white font-semibold px-8 py-4 rounded-full text-base hover:bg-white hover:text-burgundy transition-all flex items-center gap-2">
+          <span>📦</span>
+          Kalkulator Reseller
+        </a>
+      </div>
+
+      <!-- Stats row -->
+      <div class="flex gap-8 mt-12 pt-8 border-t border-white border-opacity-20">
+        <div>
+          <div class="text-white text-2xl font-bold" style="font-family: 'Playfair Display', serif;">38+</div>
+          <div class="text-amber-pale text-xs">Tahun Beroperasi</div>
+        </div>
+        <div>
+          <div class="text-white text-2xl font-bold" style="font-family: 'Playfair Display', serif;">500+</div>
+          <div class="text-amber-pale text-xs">Reseller Aktif</div>
+        </div>
+        <div>
+          <div class="text-white text-2xl font-bold" style="font-family: 'Playfair Display', serif;">34</div>
+          <div class="text-amber-pale text-xs">Provinsi Jangkauan</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Product showcase card -->
+    <div class="relative flex justify-center lg:justify-end">
+      <div class="relative w-full max-w-sm">
+        <!-- Glow behind card -->
+        <div class="absolute inset-0 bg-amber opacity-20 rounded-3xl blur-3xl transform scale-110"></div>
+
+        <div class="relative bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-3xl p-8 text-center shadow-2xl">
+          <!-- Product image placeholder with icon -->
+          <div class="w-40 h-40 mx-auto mb-6 rounded-full bg-gradient-to-br from-amber-light to-amber flex items-center justify-center shadow-xl text-7xl">
+            🍞
+          </div>
+
+          <div class="text-white text-sm font-light tracking-widest mb-1">PRODUK UNGGULAN</div>
+          <h3 class="text-white text-2xl font-bold mb-2" style="font-family: 'Playfair Display', serif;">Roti Kacang Spesial</h3>
+          <p class="text-amber-pale text-sm mb-6">Isian kacang pilihan, adonan lembut, dipanggang sempurna setiap pagi</p>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap justify-center gap-2 mb-6">
+            <span class="bg-amber bg-opacity-30 text-amber-pale text-xs px-3 py-1 rounded-full border border-amber border-opacity-40">🌾 Non-Pengawet</span>
+            <span class="bg-amber bg-opacity-30 text-amber-pale text-xs px-3 py-1 rounded-full border border-amber border-opacity-40">🔥 Dipanggang Segar</span>
+            <span class="bg-amber bg-opacity-30 text-amber-pale text-xs px-3 py-1 rounded-full border border-amber border-opacity-40">📦 Siap Cargo</span>
+          </div>
+
+          <div class="text-amber-light text-3xl font-black" style="font-family: 'Playfair Display', serif;">Rp 45.000<span class="text-base font-normal text-white opacity-70">/kotak</span></div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-16 text-white text-center">
+        <div class="text-xs tracking-widest opacity-60 mb-2">SCROLL</div>
+        <div class="bounce-down text-xl opacity-60">↓</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HERITAGE STRIP ===== -->
+<section class="bg-amber py-5">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-wrap items-center justify-center gap-8 text-white text-sm font-medium tracking-wider">
+      <span class="flex items-center gap-2"><span class="text-lg">🏆</span> BRAND LEGENDARIS TEBING TINGGI</span>
+      <span class="text-white opacity-40">•</span>
+      <span class="flex items-center gap-2"><span class="text-lg">🌿</span> BAHAN ALAMI PREMIUM</span>
+      <span class="text-white opacity-40">•</span>
+      <span class="flex items-center gap-2"><span class="text-lg">🚚</span> PENGIRIMAN KE SELURUH SUMATERA</span>
+      <span class="text-white opacity-40">•</span>
+      <span class="flex items-center gap-2"><span class="text-lg">✅</span> HALAL & BERSERTIFIKAT</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GEBRAKAN 1: FRESH TRACKER ===== -->
+<section id="tracker" class="py-24 pattern-bg relative overflow-hidden">
+  <div class="eagle-watermark" style="right: -60px; top: 50%; transform: translateY(-50%); opacity: 0.03;">🦅</div>
+
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Section Header -->
+    <div class="text-center mb-16 fade-in-section">
+      <div class="ornament mb-4 text-xs tracking-widest font-semibold text-amber">GEBRAKAN 01</div>
+      <h2 class="text-burgundy text-4xl lg:text-5xl font-black mb-4" style="font-family: 'Playfair Display', serif;">
+        Rajawali <span class="italic text-amber">Fresh-Tracker</span>
+      </h2>
+      <p class="text-gray-500 max-w-xl mx-auto text-base">Pantau langsung status pemanggangan roti kami secara real-time. Transparansi penuh dari dapur ke tangan Anda.</p>
+    </div>
+
+    <!-- Main Tracker Dashboard -->
+    <div class="max-w-3xl mx-auto fade-in-section">
+      <div class="relative bg-burgundy rounded-3xl overflow-hidden shadow-2xl">
+        <!-- Top accent line -->
+        <div class="h-1.5 bg-gradient-to-r from-amber-dark via-amber-light to-amber-dark"></div>
+
+        <div class="p-8 lg:p-12">
+          <!-- Header -->
+          <div class="flex items-center justify-between mb-10">
+            <div>
+              <div class="text-amber text-xs tracking-widest font-semibold mb-1">DAPUR PUSAT — TEBING TINGGI</div>
+              <h3 class="text-white text-2xl font-bold" style="font-family: 'Playfair Display', serif;">Status Produksi Live</h3>
+            </div>
+            <div class="text-right">
+              <div class="flex items-center gap-2 justify-end mb-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-green-400 blink-dot"></span>
+                <span class="text-green-400 text-sm font-semibold">ONLINE</span>
+              </div>
+              <div class="text-white text-opacity-50 text-xs" id="live-time">--:--:--</div>
+            </div>
+          </div>
+
+          <!-- Batch Status Badge -->
+          <div class="text-center mb-8">
+            <div id="batch-badge"
+                 class="inline-block bg-amber bg-opacity-20 border-2 border-amber rounded-2xl px-8 py-4 text-amber font-black text-xl lg:text-2xl tracking-wider"
+                 style="font-family: 'Playfair Display', serif;">
+              BATCH 03: SEDANG DIPANGGANG 🔥
+            </div>
+          </div>
+
+          <!-- Timer Display -->
+          <div class="text-center mb-10">
+            <div class="text-white text-xs tracking-widest mb-3 opacity-60">ESTIMASI MATANG DALAM</div>
+            <div id="countdown-timer" class="text-amber text-7xl lg:text-8xl font-black timer-glow tabular-nums" style="font-family: 'Playfair Display', serif; letter-spacing: -2px;">
+              15:00
+            </div>
+            <div class="text-white text-opacity-40 text-sm mt-2">menit : detik</div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="mb-10">
+            <div class="flex justify-between text-xs text-white text-opacity-50 mb-2">
+              <span>Mulai Dipanggang</span>
+              <span id="progress-percent">0%</span>
+              <span>Matang & Siap</span>
+            </div>
+            <div class="h-3 bg-white bg-opacity-10 rounded-full overflow-hidden">
+              <div id="progress-bar"
+                   class="h-full rounded-full transition-all duration-1000"
+                   style="width: 0%; background: linear-gradient(90deg, #B45309, #D97706, #F59E0B);">
+              </div>
+            </div>
+          </div>
+
+          <!-- Step indicators -->
+          <div class="grid grid-cols-4 gap-3">
+            <div class="step-indicator text-center" data-step="1">
+              <div class="step-dot w-10 h-10 mx-auto mb-2 rounded-full bg-amber flex items-center justify-center text-white text-lg">🌾</div>
+              <div class="text-white text-opacity-70 text-xs">Adonan<br/>Disiapkan</div>
+            </div>
+            <div class="step-indicator text-center" data-step="2">
+              <div id="step2-dot" class="step-dot w-10 h-10 mx-auto mb-2 rounded-full bg-white bg-opacity-20 flex items-center justify-center text-white text-lg">🥜</div>
+              <div class="text-white text-opacity-70 text-xs">Isian<br/>Kacang</div>
+            </div>
+            <div class="step-indicator text-center" data-step="3">
+              <div id="step3-dot" class="step-dot w-10 h-10 mx-auto mb-2 rounded-full bg-white bg-opacity-20 flex items-center justify-center text-white text-lg">🔥</div>
+              <div class="text-white text-opacity-70 text-xs">Proses<br/>Pemanggangan</div>
+            </div>
+            <div class="step-indicator text-center" data-step="4">
+              <div id="step4-dot" class="step-dot w-10 h-10 mx-auto mb-2 rounded-full bg-white bg-opacity-20 flex items-center justify-center text-white text-lg">📦</div>
+              <div class="text-white text-opacity-70 text-xs">Siap<br/>Dikirim</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom info strip -->
+        <div class="bg-black bg-opacity-30 px-8 py-4 flex flex-wrap gap-4 justify-between items-center">
+          <div class="text-white text-opacity-60 text-xs">Oven: Suhu <span class="text-amber font-semibold">180°C</span></div>
+          <div class="text-white text-opacity-60 text-xs">Total unit batch ini: <span class="text-amber font-semibold">120 kotak</span></div>
+          <div class="text-white text-opacity-60 text-xs">Jadwal batch berikutnya: <span class="text-amber font-semibold">BATCH 04 — 14:00 WIB</span></div>
+        </div>
+      </div>
+
+      <!-- Quick order prompt -->
+      <div class="mt-6 bg-amber-pale border border-amber border-opacity-30 rounded-2xl p-5 flex items-center justify-between flex-wrap gap-4">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">💡</span>
+          <div>
+            <div class="font-semibold text-burgundy text-sm">Pre-order sebelum batch matang!</div>
+            <div class="text-gray-500 text-xs">Dapatkan prioritas pengiriman untuk batch ini</div>
+          </div>
+        </div>
+        <a href="https://wa.me/628126346681?text=Halo%2C%20saya%20ingin%20pre-order%20Batch%2003%20Roti%20Kacang%20Rajawali." target="_blank"
+           class="bg-burgundy text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-burgundy-light transition-all whitespace-nowrap">
+          Pre-order via WhatsApp →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DIVIDER ===== -->
+<div class="h-20 bg-cream" style="clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%);"></div>
+
+<!-- ===== GEBRAKAN 2: B2B RESELLER CALCULATOR ===== -->
+<section id="reseller" class="py-24 bg-cream relative overflow-hidden">
+  <div class="eagle-watermark" style="left: -60px; bottom: -20px; opacity: 0.025;">🦅</div>
+
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Section Header -->
+    <div class="text-center mb-16 fade-in-section">
+      <div class="ornament mb-4 text-xs tracking-widest font-semibold text-amber">GEBRAKAN 02</div>
+      <h2 class="text-burgundy text-4xl lg:text-5xl font-black mb-4" style="font-family: 'Playfair Display', serif;">
+        B2B Reseller &amp; <span class="italic text-amber">Cargo Calculator</span>
+      </h2>
+      <p class="text-gray-500 max-w-xl mx-auto text-base">Hitung keuntungan bisnis Anda secara instan. Semakin banyak pesan, semakin besar margin profit Anda.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-10 items-start max-w-5xl mx-auto">
+      <!-- Input Form -->
+      <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden fade-in-section">
+        <div class="bg-burgundy px-8 py-6">
+          <div class="text-amber text-xs font-semibold tracking-widest mb-1">FORMULIR PERHITUNGAN</div>
+          <h3 class="text-white text-xl font-bold" style="font-family: 'Playfair Display', serif;">Detail Pemesanan Grosir</h3>
+        </div>
+
+        <div class="p-8">
+          <!-- Jumlah Kotak -->
+          <div class="mb-6">
+            <label class="block text-gray-700 text-sm font-semibold mb-2">
+              Jumlah Kotak <span class="text-amber">*</span>
+            </label>
+            <div class="relative">
+              <input
+                type="number"
+                id="jumlah_kotak"
+                min="1"
+                placeholder="Masukkan jumlah kotak (min. 1)"
+                class="input-field w-full rounded-xl px-4 py-3.5 text-gray-800 bg-gray-50 pr-16"
+                oninput="calculateReseller()"
+              />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-medium">Kotak</span>
+            </div>
+            <p class="text-gray-400 text-xs mt-1.5">Isi kacang pilihan, 1 kotak = ±20 pcs roti</p>
+          </div>
+
+          <!-- Kargo -->
+          <div class="mb-8">
+            <label class="block text-gray-700 text-sm font-semibold mb-2">
+              Pilihan Ekspedisi Kargo <span class="text-amber">*</span>
+            </label>
+            <select
+              id="pilihan_kargo"
+              class="input-field w-full rounded-xl px-4 py-3.5 text-gray-800 bg-gray-50 appearance-none cursor-pointer"
+              onchange="calculateReseller()"
+            >
+              <option value="">— Pilih Ekspedisi —</option>
+              <option value="jnt">J&amp;T Cargo (Rekomendasi Roti)</option>
+              <option value="als">Bus ALS Lintas Sumatera</option>
+              <option value="tiki">Titipan Kilat (Tiki)</option>
+            </select>
+          </div>
+
+          <!-- Tier bonus info -->
+          <div class="space-y-3">
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-amber-pale border border-amber border-opacity-30">
+              <span class="text-xl">🎁</span>
+              <div>
+                <div class="text-amber-dark font-semibold text-xs">RESELLER SILVER (≥20 kotak)</div>
+                <div class="text-gray-600 text-xs">Harga Rp 40.000/kotak + Bonus Free Bubble Wrap + Stiker Reseller</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-burgundy-pale border border-burgundy border-opacity-20">
+              <span class="text-xl">📦</span>
+              <div>
+                <div class="text-burgundy font-semibold text-xs">RESELLER GOLD (≥100 kotak)</div>
+                <div class="text-gray-600 text-xs">Harga Rp 37.000/kotak + Bonus Packing Peti Kayu Aman (Anti Hancur)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Result Card -->
+      <div class="fade-in-section">
+        <!-- Tier Badge -->
+        <div id="tier-badge" class="hidden mb-4 text-center py-3 rounded-2xl font-bold text-base tracking-wide transition-all"></div>
+
+        <!-- Main Summary Card -->
+        <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+          <div class="bg-gradient-to-br from-amber to-amber-dark px-8 py-6">
+            <div class="text-white text-opacity-80 text-xs font-semibold tracking-widest mb-1">RINGKASAN PESANAN</div>
+            <h3 class="text-white text-xl font-bold" style="font-family: 'Playfair Display', serif;">Kalkulasi Real-Time</h3>
+          </div>
+
+          <div class="p-8">
+            <!-- Price per box -->
+            <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-100">
+              <span class="text-gray-500 text-sm">Harga per Kotak</span>
+              <span id="harga-per-kotak" class="font-bold text-gray-800 text-lg">Rp 45.000</span>
+            </div>
+            <!-- Quantity -->
+            <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-100">
+              <span class="text-gray-500 text-sm">Jumlah Kotak</span>
+              <span id="display-kotak" class="font-bold text-gray-800 text-lg">—</span>
+            </div>
+            <!-- Total Weight -->
+            <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-100">
+              <span class="text-gray-500 text-sm">Total Berat</span>
+              <span id="total-berat" class="font-bold text-gray-800 text-lg">— Kg</span>
+            </div>
+            <!-- Shipping -->
+            <div class="flex justify-between items-center mb-6 pb-6 border-b border-gray-100">
+              <span class="text-gray-500 text-sm">Ekspedisi</span>
+              <span id="display-kargo" class="font-semibold text-burgundy text-sm text-right max-w-40">—</span>
+            </div>
+
+            <!-- Total Price -->
+            <div class="bg-burgundy rounded-2xl p-5 mb-4">
+              <div class="text-white text-opacity-70 text-xs mb-1 tracking-wider">TOTAL HARGA PRODUK</div>
+              <div id="total-harga" class="text-white text-3xl font-black" style="font-family: 'Playfair Display', serif;">Rp 0</div>
+              <div class="text-white text-opacity-50 text-xs mt-1">*Belum termasuk ongkos kirim</div>
+            </div>
+
+            <!-- Bonus info -->
+            <div id="bonus-info" class="hidden rounded-2xl p-4 text-sm font-medium"></div>
+
+            <!-- CTA -->
+            <a id="wa-order-link"
+               href="https://wa.me/628126346681?text=Halo%20Rajawali%2C%20saya%20ingin%20memesan."
+               target="_blank"
+               class="mt-5 block w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-2xl transition-all hover:shadow-lg text-base">
+              📲 Konfirmasi Order via WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT / HERITAGE SECTION ===== -->
+<section class="py-24 bg-white relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="fade-in-section">
+        <div class="ornament mb-4 text-xs tracking-widest font-semibold text-amber">WARISAN KAMI</div>
+        <h2 class="text-burgundy text-4xl lg:text-5xl font-black leading-tight mb-6" style="font-family: 'Playfair Display', serif;">
+          Dari Tangan Nenek Moyang,<br/><span class="italic text-amber">Untuk Lidah Indonesia</span>
+        </h2>
+        <p class="text-gray-500 leading-relaxed mb-6">
+          Sejak 1985, Dapur Rajawali berdiri di jantung Kota Tebing Tinggi — tempat di mana aroma panggang kacang mewarnai pagi-pagi warga. Resep asli kami dijaga turun-temurun, tidak pernah berubah, tidak pernah kompromi.
+        </p>
+        <p class="text-gray-500 leading-relaxed mb-8">
+          Setiap kotak yang keluar dari dapur kami adalah janji: <strong class="text-burgundy">roti segar, tanpa pengawet, dipanggang dengan cinta</strong> — persis seperti yang dijanjikan generasi pertama Rajawali kepada pelanggan setia mereka.
+        </p>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="text-center p-4 bg-amber-pale rounded-2xl">
+            <div class="text-amber text-2xl font-black" style="font-family: 'Playfair Display', serif;">38+</div>
+            <div class="text-gray-500 text-xs mt-1">Tahun Pengalaman</div>
+          </div>
+          <div class="text-center p-4 bg-burgundy-pale rounded-2xl">
+            <div class="text-burgundy text-2xl font-black" style="font-family: 'Playfair Display', serif;">100%</div>
+            <div class="text-gray-500 text-xs mt-1">Bahan Alami</div>
+          </div>
+          <div class="text-center p-4 bg-amber-pale rounded-2xl">
+            <div class="text-amber text-2xl font-black" style="font-family: 'Playfair Display', serif;">0</div>
+            <div class="text-gray-500 text-xs mt-1">Pengawet Kimia</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in-section">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="card-lift bg-cream rounded-2xl p-6 text-center border border-gray-100">
+            <div class="text-5xl mb-3">🌰</div>
+            <h4 class="font-bold text-burgundy mb-1 text-sm" style="font-family: 'Playfair Display', serif;">Kacang Tanah Premium</h4>
+            <p class="text-gray-400 text-xs">Dipilih langsung dari petani lokal terpercaya Sumatera Utara</p>
+          </div>
+          <div class="card-lift bg-burgundy rounded-2xl p-6 text-center mt-6">
+            <div class="text-5xl mb-3">🔥</div>
+            <h4 class="font-bold text-white mb-1 text-sm" style="font-family: 'Playfair Display', serif;">Panggang Sempurna</h4>
+            <p class="text-white text-opacity-70 text-xs">Suhu 180°C selama 20 menit — menghasilkan tekstur luar kecokelatan, dalam lembut</p>
+          </div>
+          <div class="card-lift bg-amber rounded-2xl p-6 text-center">
+            <div class="text-5xl mb-3">📦</div>
+            <h4 class="font-bold text-white mb-1 text-sm" style="font-family: 'Playfair Display', serif;">Packing Aman Cargo</h4>
+            <p class="text-white text-opacity-80 text-xs">Dikemas khusus dengan lapisan pelindung untuk perjalanan jauh</p>
+          </div>
+          <div class="card-lift bg-cream rounded-2xl p-6 text-center border border-gray-100 mt-6">
+            <div class="text-5xl mb-3">🦅</div>
+            <h4 class="font-bold text-burgundy mb-1 text-sm" style="font-family: 'Playfair Display', serif;">Merek Bergaransi</h4>
+            <p class="text-gray-400 text-xs">Kode keamanan unik pada setiap kemasan untuk jaminan keaslian</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GEBRAKAN 3: VERIFIKASI KEASLIAN ===== -->
+<section id="verifikasi" class="py-24 bg-burgundy relative overflow-hidden">
+  <!-- Decorative circles -->
+  <div class="absolute top-0 right-0 w-96 h-96 rounded-full" style="background: radial-gradient(circle, rgba(217,119,6,0.1) 0%, transparent 70%); transform: translate(30%, -30%);"></div>
+  <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full" style="background: radial-gradient(circle, rgba(217,119,6,0.08) 0%, transparent 70%); transform: translate(-30%, 30%);"></div>
+
+  <div class="eagle-watermark" style="right: -40px; top: 50%; transform: translateY(-50%); color: white; opacity: 0.05;">🦅</div>
+
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 fade-in-section">
+      <div class="inline-flex items-center gap-2 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-full px-4 py-2 mb-6">
+        <span>🛡️</span>
+        <span class="text-amber text-xs font-semibold tracking-widest">GEBRAKAN 03</span>
+      </div>
+      <h2 class="text-white text-4xl lg:text-5xl font-black mb-4" style="font-family: 'Playfair Display', serif;">
+        Anti-Counterfeit<br/>
+        <span class="italic text-amber">Verifikasi Keaslian Produk</span>
+      </h2>
+      <p class="text-white text-opacity-60 max-w-xl mx-auto text-base">Setiap kemasan Roti Kacang Rajawali dilengkapi kode keamanan unik. Verifikasi keaslian produk Anda di sini untuk memastikan Anda mendapatkan produk asli langsung dari dapur kami.</p>
+    </div>
+
+    <div class="max-w-2xl mx-auto fade-in-section">
+      <div class="bg-white bg-opacity-5 backdrop-blur-sm border border-white border-opacity-10 rounded-3xl p-8 lg:p-12">
+
+        <!-- Security visual -->
+        <div class="text-center mb-8">
+          <div class="inline-block w-24 h-24 rounded-full bg-amber bg-opacity-20 border-2 border-amber border-opacity-40 flex items-center justify-center text-5xl mb-4 mx-auto">
+            🔐
+          </div>
+          <div class="text-amber text-xs tracking-widest font-semibold">KODE KEAMANAN RAJAWALI</div>
+        </div>
+
+        <!-- Input -->
+        <div class="mb-6">
+          <label class="block text-white text-sm font-semibold mb-3">
+            Masukkan Kode Keamanan dari Kemasan
+          </label>
+          <div class="relative">
+            <input
+              type="text"
+              id="security-code"
+              placeholder="Contoh: RAJAWALI-XXXX-XXXX"
+              class="w-full rounded-2xl px-5 py-4 text-gray-800 bg-white text-base font-mono tracking-widest border-2 border-transparent focus:border-amber focus:outline-none transition-all uppercase"
+              style="letter-spacing: 2px;"
+              oninput="this.value = this.value.toUpperCase()"
+            />
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-2xl" id="code-icon">🔑</div>
+          </div>
+          <p class="text-white text-opacity-40 text-xs mt-2">Kode tertera di bagian bawah kemasan, di bawah segel hologram Rajawali</p>
+        </div>
+
+        <!-- Verify Button -->
+        <button
+          onclick="verifyProduct()"
+          class="w-full bg-amber hover:bg-amber-light text-white font-bold py-4 rounded-2xl text-base transition-all hover:shadow-lg hover:shadow-amber hover:shadow-opacity-40 flex items-center justify-center gap-2"
+        >
+          <span>🛡️</span>
+          Verifikasi Produk Sekarang
+        </button>
+
+        <!-- Result Boxes -->
+        <div id="verify-success" class="hidden mt-6 rounded-2xl p-6" style="background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.2)); border: 2px solid rgba(16,185,129,0.5);">
+          <div class="flex items-start gap-4">
+            <div class="text-4xl">✅</div>
+            <div>
+              <div class="text-green-400 font-black text-lg mb-1" style="font-family: 'Playfair Display', serif;">PRODUK 100% ASLI!</div>
+              <p class="text-green-300 text-sm leading-relaxed">Diproduksi langsung di <strong>Dapur Pusat Jl. Dr. Sutomo No. 121, Tebing Tinggi</strong>. Produk ini telah melalui proses quality control ketat dan dikemas dengan standar kebersihan premium.</p>
+              <div class="mt-3 flex gap-3 flex-wrap">
+                <span class="bg-green-500 bg-opacity-20 text-green-300 text-xs px-3 py-1 rounded-full border border-green-500 border-opacity-30">🌿 Halal Terjamin</span>
+                <span class="bg-green-500 bg-opacity-20 text-green-300 text-xs px-3 py-1 rounded-full border border-green-500 border-opacity-30">🏭 Produk Asli Rajawali</span>
+                <span class="bg-green-500 bg-opacity-20 text-green-300 text-xs px-3 py-1 rounded-full border border-green-500 border-opacity-30">📅 Batch Terdaftar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="verify-error" class="hidden mt-6 rounded-2xl p-6" style="background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(185,28,28,0.2)); border: 2px solid rgba(239,68,68,0.4);">
+          <div class="flex items-start gap-4">
+            <div class="text-4xl">⚠️</div>
+            <div>
+              <div class="text-red-400 font-black text-lg mb-1" style="font-family: 'Playfair Display', serif;">KODE TIDAK TERDAFTAR!</div>
+              <p class="text-red-300 text-sm leading-relaxed">Waspada produk tiruan. Pastikan segel kemasan Anda utuh dan hologram Rajawali masih tersegel. Segera hubungi kami jika Anda mencurigai pemalsuan produk.</p>
+              <a href="https://wa.me/628126346681?text=Saya%20menemukan%20produk%20yang%20mencurigakan%20dengan%20kode%20palsu." target="_blank"
+                 class="mt-3 inline-block text-red-300 text-xs border border-red-400 border-opacity-50 px-4 py-2 rounded-full hover:bg-red-500 hover:bg-opacity-20 transition-all">
+                Laporkan ke Rajawali →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info box -->
+      <div class="mt-6 text-center">
+        <p class="text-white text-opacity-40 text-xs">Kode demo untuk pengujian: <span class="text-amber font-mono font-semibold">RAJAWALI-ASLI-2026</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIAL SECTION ===== -->
+<section class="py-24 bg-cream">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 fade-in-section">
+      <div class="ornament mb-4 text-xs tracking-widest font-semibold text-amber">KATA MEREKA</div>
+      <h2 class="text-burgundy text-4xl font-black" style="font-family: 'Playfair Display', serif;">Dipercaya Ribuan Reseller</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 fade-in-section">
+      <div class="card-lift bg-white rounded-2xl p-6 shadow-md border border-gray-100 relative">
+        <div class="absolute top-4 right-4 text-amber text-2xl opacity-30">"</div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 rounded-full bg-amber flex items-center justify-center text-white font-bold">B</div>
+          <div>
+            <div class="font-semibold text-gray-800 text-sm">Budi Santoso</div>
+            <div class="text-gray-400 text-xs">Reseller Gold, Medan</div>
+          </div>
+          <div class="ml-auto text-amber text-sm">⭐⭐⭐⭐⭐</div>
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed">"Sudah 3 tahun jadi reseller Rajawali. Produknya konsisten enak, packing aman, dan customer saya selalu repeat order. Profit margin-nya bagus banget!"</p>
+      </div>
+
+      <div class="card-lift bg-burgundy rounded-2xl p-6 shadow-md relative">
+        <div class="absolute top-4 right-4 text-amber text-2xl opacity-30">"</div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 rounded-full bg-amber flex items-center justify-center text-white font-bold">S</div>
+          <div>
+            <div class="font-semibold text-white text-sm">Siti Rahma</div>
+            <div class="text-amber text-opacity-70 text-xs">Reseller Silver, Pekanbaru</div>
+          </div>
+          <div class="ml-auto text-amber text-sm">⭐⭐⭐⭐⭐</div>
+        </div>
+        <p class="text-white text-opacity-70 text-sm leading-relaxed">"Fresh Tracker-nya keren! Saya bisa tau kapan roti matang dan langsung kasih tau customer. Jualan jadi lebih profesional dan terpercaya!"</p>
+      </div>
+
+      <div class="card-lift bg-white rounded-2xl p-6 shadow-md border border-gray-100 relative">
+        <div class="absolute top-4 right-4 text-amber text-2xl opacity-30">"</div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 rounded-full bg-burgundy flex items-center justify-center text-white font-bold">A</div>
+          <div>
+            <div class="font-semibold text-gray-800 text-sm">Ahmad Fauzi</div>
+            <div class="text-gray-400 text-xs">Reseller Gold, Batam</div>
+          </div>
+          <div class="ml-auto text-amber text-sm">⭐⭐⭐⭐⭐</div>
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed">"Order 200 kotak per bulan via cargo Bus ALS. Selalu tiba dalam kondisi sempurna! Packing peti kayunya benar-benar melindungi roti dari kerusakan."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT / FOOTER ===== -->
+<footer class="bg-burgundy-dark pt-20 pb-8" style="background: #2D0A0A;">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-4 gap-10 mb-16">
+      <!-- Brand -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 rounded-full bg-amber flex items-center justify-center text-white font-bold text-2xl shadow-lg" style="font-family: 'Playfair Display', serif;">R</div>
+          <div>
+            <div class="text-white font-black text-lg" style="font-family: 'Playfair Display', serif;">Roti Kacang Rajawali</div>
+            <div class="text-amber text-xs tracking-widest">TEBING TINGGI • EST. 1985</div>
+          </div>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">Warisan kuliner terbaik dari Kota Tebing Tinggi. Dipanggang segar setiap hari, dikirim ke seluruh Nusantara dengan penuh cinta dan tanggung jawab.</p>
+        <div class="flex gap-3">
+          <a href="https://wa.me/628126346681" target="_blank"
+             class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white text-xl hover:bg-green-500 transition-colors">📱</a>
+          <a href="#" class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl hover:bg-blue-500 transition-colors">📘</a>
+          <a href="#" class="w-10 h-10 rounded-full bg-pink-600 flex items-center justify-center text-white text-xl hover:bg-pink-500 transition-colors">📸</a>
+        </div>
+      </div>
+
+      <!-- Links -->
+      <div>
+        <h4 class="text-white font-bold mb-5 text-sm tracking-wider">MENU</h4>
+        <ul class="space-y-3">
+          <li><a href="#tracker" class="text-gray-400 text-sm hover:text-amber transition-colors">🔥 Fresh Tracker</a></li>
+          <li><a href="#reseller" class="text-gray-400 text-sm hover:text-amber transition-colors">📦 Kalkulator B2B</a></li>
+          <li><a href="#verifikasi" class="text-gray-400 text-sm hover:text-amber transition-colors">🛡️ Verifikasi Produk</a></li>
+          <li><a href="#" class="text-gray-400 text-sm hover:text-amber transition-colors">📋 Program Reseller</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="text-white font-bold mb-5 text-sm tracking-wider">KONTAK</h4>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-2">
+            <span class="text-amber mt-0.5">📍</span>
+            <span class="text-gray-400 text-sm">Jl. Dr. Sutomo No. 121, Tebing Tinggi, Sumatera Utara</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-amber">📞</span>
+            <a href="tel:+628126346681" class="text-gray-400 text-sm hover:text-amber transition-colors">+62 812-6346-681</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-amber">⏰</span>
+            <span class="text-gray-400 text-sm">Senin – Sabtu, 06.00 – 17.00 WIB</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-white border-opacity-10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-gray-600 text-xs">© 2026 Roti Kacang Rajawali Tebing Tinggi. Seluruh hak cipta dilindungi.</p>
+      <p class="text-gray-600 text-xs">Diproduksi dengan 🦅 di Tebing Tinggi, Sumatera Utara</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== FLOATING WHATSAPP ===== -->
+<a href="https://wa.me/628126346681?text=Halo%20Roti%20Kacang%20Rajawali%20Tebing%20Tinggi%2C%20saya%20tertarik%20untuk%20menjadi%20mitra%20reseller%2F%20melakukan%20pemesanan%20dalam%20jumlah%20besar.%20Boleh%20saya%20mendapatkan%20informasi%20lebih%20lanjut%20mengenai%20harga%20grosir%20dan%20program%20reseller%3F%20Terima%20kasih."
+   target="_blank"
+   class="wa-pulse fixed bottom-6 right-6 z-50 w-16 h-16 bg-green-500 hover:bg-green-400 rounded-full flex items-center justify-center shadow-2xl transition-all hover:scale-110"
+   title="Chat via WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-8 h-8">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+  <!-- Label -->
+  <div class="absolute right-full mr-3 bg-white text-green-600 text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg whitespace-nowrap opacity-0 hover-label transition-opacity">
+    Chat WhatsApp
+  </div>
+</a>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  // =============================
+  // 1. LIVE CLOCK
+  // =============================
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2,'0');
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const s = String(now.getSeconds()).padStart(2,'0');
+    const el = document.getElementById('live-time');
+    if (el) el.textContent = `${h}:${m}:${s} WIB`;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // =============================
+  // 2. FRESH TRACKER COUNTDOWN
+  // =============================
+  const TOTAL_SECONDS = 15 * 60; // 15 minutes
+  let secondsLeft = TOTAL_SECONDS;
+  let isBaking = true;
+
+  function updateTimer() {
+    secondsLeft--;
+    if (secondsLeft < 0) {
+      // Reset cycle
+      secondsLeft = TOTAL_SECONDS;
+      isBaking = true;
+    }
+
+    const elapsed = TOTAL_SECONDS - secondsLeft;
+    const progressPct = Math.round((elapsed / TOTAL_SECONDS) * 100);
+
+    // Update display
+    const mins = Math.floor(secondsLeft / 60);
+    const secs = secondsLeft % 60;
+    const display = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    document.getElementById('countdown-timer').textContent = display;
+
+    // Update progress bar
+    document.getElementById('progress-bar').style.width = progressPct + '%';
+    document.getElementById('progress-percent').textContent = progressPct + '%';
+
+    // Update batch badge and steps
+    const badge = document.getElementById('batch-badge');
+
+    if (secondsLeft <= 0 || secondsLeft === TOTAL_SECONDS) {
+      // Just reset — matang
+      badge.className = 'inline-block border-2 rounded-2xl px-8 py-4 font-black text-xl lg:text-2xl tracking-wider';
+      badge.style.background = 'rgba(16,185,129,0.2)';
+      badge.style.borderColor = 'rgb(16,185,129)';
+      badge.style.color = 'rgb(52,211,153)';
+      badge.textContent = 'BATCH 03: MATANG & SIAP DIKIRIM! 🎉';
+      setStepActive(4);
+    } else {
+      badge.className = 'inline-block bg-amber bg-opacity-20 border-2 border-amber rounded-2xl px-8 py-4 text-amber font-black text-xl lg:text-2xl tracking-wider';
+      badge.style.background = '';
+      badge.style.borderColor = '';
+      badge.style.color = '';
+      badge.textContent = 'BATCH 03: SEDANG DIPANGGANG 🔥';
+
+      if (progressPct < 25) setStepActive(1);
+      else if (progressPct < 50) setStepActive(2);
+      else if (progressPct < 90) setStepActive(3);
+    }
+  }
+
+  function setStepActive(step) {
+    const dots = ['step2-dot','step3-dot','step4-dot'];
+    const colors = ['bg-amber','bg-white bg-opacity-20'];
+    dots.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (i + 2 <= step) {
+        el.className = el.className.replace('bg-white bg-opacity-20', '').trim();
+        if (!el.className.includes('bg-amber')) el.className += ' bg-amber';
+      } else {
+        el.className = el.className.replace('bg-amber', '').trim();
+        if (!el.className.includes('bg-white bg-opacity-20')) el.className += ' bg-white bg-opacity-20';
+      }
+    });
+  }
+
+  setInterval(updateTimer, 1000);
+
+  // =============================
+  // 3. RESELLER CALCULATOR
+  // =============================
+  const kargoNames = {
+    'jnt': 'J&T Cargo (Rekomendasi Roti)',
+    'als': 'Bus ALS Lintas Sumatera',
+    'tiki': 'Titipan Kilat (Tiki)'
+  };
+
+  function formatRupiah(n) {
+    return 'Rp ' + Number(n).toLocaleString('id-ID');
+  }
+
+  function calculateReseller() {
+    const qty = parseInt(document.getElementById('jumlah_kotak').value) || 0;
+    const kargo = document.getElementById('pilihan_kargo').value;
+
+    let pricePerBox = 45000;
+    let bonusText = '';
+    let tierBadgeText = '';
+    let tierBadgeClass = '';
+
+    if (qty >= 100) {
+      pricePerBox = 37000;
+      bonusText = '📦 Bonus Packing Peti Kayu Aman (Anti Hancur)';
+      tierBadgeText = '🏆 ANDA MASUK LEVEL RESELLER GOLD!';
+      tierBadgeClass = 'bg-amber text-white';
+    } else if (qty >= 20) {
+      pricePerBox = 40000;
+      bonusText = '🎁 Bonus Free Bubble Wrap + Stiker Reseller';
+      tierBadgeText = '🥈 ANDA MASUK LEVEL RESELLER SILVER!';
+      tierBadgeClass = 'bg-gray-400 text-white';
+    }
+
+    const totalHarga = qty * pricePerBox;
+    const totalBerat = (qty * 0.5).toFixed(1);
+
+    // Update DOM
+    document.getElementById('harga-per-kotak').textContent = formatRupiah(pricePerBox);
+    document.getElementById('display-kotak').textContent = qty > 0 ? qty + ' kotak' : '—';
+    document.getElementById('total-berat').textContent = qty > 0 ? totalBerat + ' Kg' : '— Kg';
+    document.getElementById('total-harga').textContent = qty > 0 ? formatRupiah(totalHarga) : 'Rp 0';
+    document.getElementById('display-kargo').textContent = kargo ? kargoNames[kargo] : '—';
+
+    // Tier badge
+    const tierEl = document.getElementById('tier-badge');
+    if (tierBadgeText && qty > 0) {
+      tierEl.className = `mb-4 text-center py-3 rounded-2xl font-bold text-base tracking-wide transition-all ${tierBadgeClass}`;
+      tierEl.textContent = tierBadgeText;
+      tierEl.classList.remove('hidden');
+    } else {
+      tierEl.classList.add('hidden');
+    }
+
+    // Bonus box
+    const bonusEl = document.getElementById('bonus-info');
+    if (bonusText && qty > 0) {
+      bonusEl.className = 'rounded-2xl p-4 text-sm font-medium bg-green-50 border border-green-200 text-green-700';
+      bonusEl.textContent = bonusText;
+      bonusEl.classList.remove('hidden');
+    } else {
+      bonusEl.classList.add('hidden');
+    }
+
+    // WhatsApp link
+    if (qty > 0) {
+      const waMsg = encodeURIComponent(`Halo Rajawali! Saya ingin memesan:\n\n📦 Jumlah: ${qty} kotak\n💰 Harga/kotak: ${formatRupiah(pricePerBox)}\n🏋️ Total berat: ${totalBerat} Kg\n🚚 Ekspedisi: ${kargo ? kargoNames[kargo] : 'Belum dipilih'}\n💵 Total: ${formatRupiah(totalHarga)}\n\nMohon konfirmasi ketersediaan dan estimasi pengiriman. Terima kasih!`);
+      document.getElementById('wa-order-link').href = `https://wa.me/628126346681?text=${waMsg}`;
+    }
+  }
+
+  // =============================
+  // 4. PRODUCT VERIFICATION
+  // =============================
+  function verifyProduct() {
+    const code = document.getElementById('security-code').value.trim();
+    const successEl = document.getElementById('verify-success');
+    const errorEl = document.getElementById('verify-error');
+    const icon = document.getElementById('code-icon');
+
+    successEl.classList.add('hidden');
+    errorEl.classList.add('hidden');
+
+    if (code.toUpperCase() === 'RAJAWALI-ASLI-2026') {
+      successEl.classList.remove('hidden');
+      errorEl.classList.add('hidden');
+      icon.textContent = '✅';
+    } else {
+      errorEl.classList.remove('hidden');
+      successEl.classList.add('hidden');
+      icon.textContent = '❌';
+    }
+  }
+
+  // Also verify on Enter key
+  document.getElementById('security-code').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') verifyProduct();
+  });
+
+  // =============================
+  // 5. SCROLL ANIMATIONS
+  // =============================
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+
+  // =============================
+  // 6. NAVBAR SCROLL EFFECT
+  // =============================
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 80) {
+      nav.style.background = 'rgba(45,10,10,0.97)';
+      nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.3)';
+    } else {
+      nav.style.background = 'rgba(127,29,29,0.92)';
+      nav.style.boxShadow = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>
