@@ -1,0 +1,2258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rhino's Coffee & Eatery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --cream: #F5F0E8;
+  --warm-white: #FAF7F2;
+  --espresso: #1A0F00;
+  --dark-roast: #2C1A0A;
+  --medium-roast: #4A2C10;
+  --caramel: #C4813A;
+  --gold: #D4A84B;
+  --light-gold: #E8C97A;
+  --muted: #8C7355;
+  --border: rgba(196,129,58,0.2);
+  --text-light: #6B5740;
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--espresso);
+  color: var(--cream);
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark-roast); }
+::-webkit-scrollbar-thumb { background: var(--caramel); border-radius: 3px; }
+
+/* ===== NOISE TEXTURE OVERLAY ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.3;
+}
+
+/* ===== NAVIGATION ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  background: linear-gradient(180deg, rgba(26,15,0,0.97) 0%, rgba(26,15,0,0) 100%);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(196,129,58,0.1);
+  transition: all 0.4s ease;
+}
+
+nav.scrolled {
+  background: rgba(26,15,0,0.97);
+  border-bottom-color: rgba(196,129,58,0.25);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.nav-logo-icon {
+  width: 38px;
+  height: 38px;
+}
+
+.nav-logo-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.nav-logo-text span {
+  display: block;
+  font-size: 0.55rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: rgba(245,240,232,0.75);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1px;
+  background: var(--caramel);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover { color: var(--cream); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta {
+  background: var(--caramel);
+  color: var(--espresso) !important;
+  padding: 8px 20px;
+  border-radius: 2px;
+  font-weight: 500 !important;
+  transition: background 0.3s !important;
+}
+
+.nav-cta:hover { background: var(--gold) !important; }
+.nav-cta::after { display: none !important; }
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--cream);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 70px; left: 0; right: 0;
+  background: rgba(26,15,0,0.98);
+  backdrop-filter: blur(20px);
+  padding: 1.5rem 2rem 2rem;
+  border-bottom: 1px solid var(--border);
+  z-index: 999;
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu.open {
+  display: block;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.mobile-menu a {
+  display: block;
+  color: var(--cream);
+  text-decoration: none;
+  padding: 14px 0;
+  font-size: 1.1rem;
+  font-family: 'Cormorant Garamond', serif;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.05em;
+}
+
+.mobile-menu a:last-child { border-bottom: none; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--espresso);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(196,129,58,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(212,168,75,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 50% at 80% 20%, rgba(196,129,58,0.04) 0%, transparent 50%);
+}
+
+/* Animated coffee steam circles */
+.hero-circles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(196,129,58,0.07);
+  animation: pulse-circle 8s ease-in-out infinite;
+}
+
+.circle:nth-child(1) { width: 300px; height: 300px; top: 10%; left: 5%; animation-delay: 0s; }
+.circle:nth-child(2) { width: 500px; height: 500px; top: -10%; right: -5%; animation-delay: 2s; }
+.circle:nth-child(3) { width: 200px; height: 200px; bottom: 20%; right: 15%; animation-delay: 4s; }
+.circle:nth-child(4) { width: 150px; height: 150px; bottom: 10%; left: 20%; animation-delay: 1s; }
+
+@keyframes pulse-circle {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+/* Floating particles */
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--caramel);
+  border-radius: 50%;
+  animation: float-up linear infinite;
+  opacity: 0;
+}
+
+@keyframes float-up {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.3; }
+  100% { transform: translateY(-120px) translateX(20px); opacity: 0; }
+}
+
+.hero-content {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  padding: 0 1.5rem;
+  animation: hero-reveal 1.2s ease forwards;
+}
+
+@keyframes hero-reveal {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+}
+
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--caramel);
+}
+
+.hero-logo-large {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 1.5rem;
+  filter: drop-shadow(0 0 30px rgba(196,129,58,0.3));
+  animation: logo-glow 3s ease-in-out infinite;
+}
+
+@keyframes logo-glow {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(196,129,58,0.2)); }
+  50% { filter: drop-shadow(0 0 40px rgba(196,129,58,0.5)); }
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  margin-bottom: 0.3rem;
+}
+
+.hero-title .italic {
+  font-style: italic;
+  color: var(--caramel);
+}
+
+.hero-subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 3rem;
+}
+
+.hero-desc {
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(245,240,232,0.6);
+  max-width: 460px;
+  margin: 0 auto 3.5rem;
+  line-height: 1.8;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--caramel);
+  color: var(--espresso);
+  padding: 14px 32px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.btn-primary:hover {
+  background: var(--gold);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--cream);
+  padding: 14px 32px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(196,129,58,0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  border-color: var(--caramel);
+  color: var(--caramel);
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(180deg, transparent, var(--caramel), transparent);
+  animation: scroll-line 2s ease-in-out infinite;
+}
+
+@keyframes scroll-bounce {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(5px); }
+}
+
+@keyframes scroll-line {
+  0% { background-position: 0 -100%; }
+  100% { background-position: 0 200%; }
+}
+
+/* ===== SECTION BASE ===== */
+section { position: relative; }
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.section-eyebrow::before,
+.section-eyebrow::after {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 1px;
+  background: var(--caramel);
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--cream);
+}
+
+.section-title .italic { font-style: italic; color: var(--caramel); }
+
+/* ===== ABOUT STRIP ===== */
+.about-strip {
+  background: var(--dark-roast);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.about-ticker {
+  display: flex;
+  gap: 0;
+  animation: ticker 20s linear infinite;
+  white-space: nowrap;
+}
+
+.ticker-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.1rem 2rem;
+  font-size: 0.75rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ticker-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--caramel);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===== FEATURES ===== */
+.features {
+  padding: 6rem 2rem;
+  background: var(--espresso);
+}
+
+.features-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.feature-card {
+  background: var(--espresso);
+  padding: 3rem 2.5rem;
+  text-align: center;
+  transition: background 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--caramel), transparent);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.feature-card:hover::before { transform: scaleX(1); }
+.feature-card:hover { background: var(--dark-roast); }
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.feature-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 0.75rem;
+}
+
+.feature-desc {
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+/* ===== MENU SECTION ===== */
+.menu {
+  padding: 6rem 2rem 8rem;
+  background: var(--dark-roast);
+  position: relative;
+}
+
+.menu::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--caramel), transparent);
+}
+
+.menu-container { max-width: 1200px; margin: 0 auto; }
+
+/* Category tabs */
+.menu-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 4rem;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.menu-tabs::-webkit-scrollbar { display: none; }
+
+.menu-tab {
+  flex-shrink: 0;
+  padding: 1rem 1.75rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.menu-tab::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 2px;
+  background: var(--caramel);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.menu-tab:hover { color: var(--cream); }
+.menu-tab.active { color: var(--caramel); }
+.menu-tab.active::after { transform: scaleX(1); }
+
+/* Menu panels */
+.menu-panel { display: none; }
+.menu-panel.active { display: block; animation: panel-in 0.4s ease; }
+
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.menu-item {
+  background: var(--espresso);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  transition: background 0.3s ease;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(196,129,58,0.03) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.menu-item:hover { background: rgba(44,26,10,0.8); }
+.menu-item:hover::after { opacity: 1; }
+
+.menu-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.menu-item-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--cream);
+  line-height: 1.3;
+}
+
+.menu-item-price {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--caramel);
+  white-space: nowrap;
+  background: rgba(196,129,58,0.1);
+  padding: 3px 10px;
+  border-radius: 1px;
+  border: 1px solid rgba(196,129,58,0.2);
+  flex-shrink: 0;
+}
+
+.menu-item-desc {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  font-weight: 300;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.menu-category-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-category-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Sub-category */
+.menu-subcategory { margin-bottom: 3rem; }
+.menu-subcategory:last-child { margin-bottom: 0; }
+
+.menu-subcategory-title {
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ===== ATMOSPHERE / GALLERY ===== */
+.atmosphere {
+  padding: 6rem 2rem;
+  background: var(--espresso);
+}
+
+.atm-container { max-width: 1200px; margin: 0 auto; }
+
+.atm-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 250px 250px;
+  gap: 1.5px;
+  background: var(--border);
+  margin-top: 4rem;
+}
+
+.atm-card {
+  background: var(--dark-roast);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem;
+}
+
+.atm-card:first-child {
+  grid-row: span 2;
+}
+
+.atm-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.atm-card-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.atm-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.2;
+}
+
+.atm-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+}
+
+.atm-pattern-1 {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 30px,
+    rgba(196,129,58,0.3) 30px,
+    rgba(196,129,58,0.3) 31px
+  );
+}
+
+.atm-pattern-2 {
+  background: radial-gradient(circle at 30% 50%, rgba(196,129,58,0.4) 0%, transparent 60%);
+}
+
+.atm-pattern-3 {
+  background: repeating-radial-gradient(
+    circle at 50% 50%,
+    transparent,
+    transparent 20px,
+    rgba(196,129,58,0.15) 20px,
+    rgba(196,129,58,0.15) 21px
+  );
+}
+
+.atm-pattern-4 {
+  background: linear-gradient(135deg, rgba(196,129,58,0.2) 0%, transparent 60%);
+}
+
+.atm-number {
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem;
+  font-weight: 300;
+  color: rgba(196,129,58,0.1);
+  line-height: 1;
+}
+
+/* ===== STATS ===== */
+.stats {
+  padding: 5rem 2rem;
+  background: var(--caramel);
+  position: relative;
+  overflow: hidden;
+}
+
+.stats::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.stats-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  position: relative;
+}
+
+.stat-item { text-align: center; }
+
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 300;
+  color: var(--espresso);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(26,15,0,0.65);
+}
+
+/* ===== TESTIMONIALS ===== */
+.testimonials {
+  padding: 6rem 2rem;
+  background: var(--dark-roast);
+  overflow: hidden;
+}
+
+.testimonials-container { max-width: 1100px; margin: 0 auto; }
+
+.testimonials-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.testimonial-card {
+  background: var(--espresso);
+  padding: 2.5rem;
+  border: 1px solid var(--border);
+  position: relative;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(196,129,58,0.4);
+}
+
+.testimonial-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem;
+  color: var(--caramel);
+  line-height: 0.5;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.testimonial-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(245,240,232,0.8);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--caramel), var(--medium-roast));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--cream);
+  flex-shrink: 0;
+}
+
+.author-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--cream);
+}
+
+.author-title {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.stars { color: var(--gold); font-size: 0.75rem; margin-bottom: 0.3rem; }
+
+/* ===== LOCATION ===== */
+.location {
+  padding: 6rem 2rem;
+  background: var(--espresso);
+}
+
+.location-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.location-info {}
+
+.location-info .section-header { text-align: left; margin-bottom: 2.5rem; }
+.location-info .section-eyebrow { justify-content: flex-start; }
+.location-info .section-eyebrow::before { display: none; }
+
+.info-block {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.info-block:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.info-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(196,129,58,0.1);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.info-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+
+.info-value {
+  font-size: 0.95rem;
+  color: var(--cream);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.location-map {
+  background: var(--dark-roast);
+  border: 1px solid var(--border);
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-placeholder {
+  text-align: center;
+  padding: 2rem;
+  z-index: 2;
+  position: relative;
+}
+
+.map-placeholder-icon { font-size: 3rem; margin-bottom: 1rem; }
+.map-placeholder-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: var(--cream);
+  margin-bottom: 0.5rem;
+}
+.map-placeholder-sub { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem; }
+
+.map-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(196,129,58,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196,129,58,0.06) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: #0D0700;
+  border-top: 1px solid var(--border);
+  padding: 4rem 2rem 2rem;
+}
+
+.footer-container { max-width: 1100px; margin: 0 auto; }
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 4rem;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.footer-brand {}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.footer-logo-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.footer-logo-text span {
+  display: block;
+  font-size: 0.6rem;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.footer-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  max-width: 280px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.social-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.social-btn:hover {
+  border-color: var(--caramel);
+  color: var(--caramel);
+  background: rgba(196,129,58,0.08);
+}
+
+.footer-col-title {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 0.75rem; }
+.footer-links a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 300;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--cream); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.footer-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--caramel);
+  border-radius: 50%;
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ===== FLOATING ORDER BUTTON ===== */
+.float-order {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.float-btn {
+  background: var(--caramel);
+  color: var(--espresso);
+  padding: 13px 22px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(196,129,58,0.4);
+  transition: all 0.3s ease;
+  animation: float-pulse 3s ease-in-out infinite;
+}
+
+.float-btn:hover {
+  background: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(196,129,58,0.5);
+}
+
+@keyframes float-pulse {
+  0%, 100% { box-shadow: 0 8px 30px rgba(196,129,58,0.4); }
+  50% { box-shadow: 0 8px 50px rgba(196,129,58,0.6); }
+}
+
+/* ===== ANIMATIONS ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-delay-1 { transition-delay: 0.1s; }
+.fade-in-delay-2 { transition-delay: 0.2s; }
+.fade-in-delay-3 { transition-delay: 0.3s; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .features-grid .feature-card:last-child { grid-column: span 2; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .testimonials-track { grid-template-columns: 1fr 1fr; }
+  .testimonials-track .testimonial-card:last-child { grid-column: span 2; }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 0 1.25rem; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+
+  .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
+
+  .features-grid { grid-template-columns: 1fr; }
+  .features-grid .feature-card:last-child { grid-column: span 1; }
+
+  .menu-grid { grid-template-columns: 1fr; }
+
+  .atm-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 200px);
+  }
+  .atm-card:first-child { grid-row: span 1; grid-column: span 2; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .testimonials-track { grid-template-columns: 1fr; }
+  .testimonials-track .testimonial-card:last-child { grid-column: span 1; }
+
+  .location-container { grid-template-columns: 1fr; gap: 3rem; }
+
+  .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+
+  .float-order { bottom: 1.25rem; right: 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-outline { width: 100%; max-width: 280px; justify-content: center; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .atm-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .atm-card:first-child { grid-column: span 1; height: 250px; }
+  .atm-card { height: 180px; }
+  .menu-tabs { gap: 0; }
+  .menu-tab { padding: 0.75rem 1rem; font-size: 0.65rem; }
+}
+
+/* ===== RHINO LOGO SVG ===== */
+.rhino-logo-svg { display: block; }
+</style>
+</head>
+
+<body>
+
+<!-- FLOATING ORDER -->
+<div class="float-order">
+  <button class="float-btn" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
+    ☕ Lihat Menu
+  </button>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <svg class="nav-logo-icon rhino-logo-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="39" stroke="#C4813A" stroke-width="1"/>
+      <path d="M40 12C40 12 28 20 24 30C20 40 26 48 32 50C28 54 25 60 28 65C32 70 40 68 40 68C40 68 48 70 52 65C55 60 52 54 48 50C54 48 60 40 56 30C52 20 40 12 40 12Z" fill="#C4813A" opacity="0.15"/>
+      <path d="M40 15C40 15 30 22 26 31C22 40 27 47 33 49" stroke="#C4813A" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M40 15C40 15 50 22 54 31C58 40 53 47 47 49" stroke="#C4813A" stroke-width="1.5" stroke-linecap="round"/>
+      <ellipse cx="40" cy="38" rx="10" ry="14" stroke="#C4813A" stroke-width="1.5"/>
+      <circle cx="40" cy="38" r="4" fill="#C4813A" opacity="0.6"/>
+      <path d="M33 49C33 49 30 55 32 60C34 65 40 64 40 64C40 64 46 65 48 60C50 55 47 49 47 49" stroke="#C4813A" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M26 34C24 36 23 38 24 40" stroke="#C4813A" stroke-width="1" stroke-linecap="round"/>
+      <path d="M54 34C56 36 57 38 56 40" stroke="#C4813A" stroke-width="1" stroke-linecap="round"/>
+    </svg>
+    <div class="nav-logo-text">
+      Rhino's
+      <span>Coffee & Eatery</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#tentang">Tentang</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#atmosfer">Atmosfer</a></li>
+    <li><a href="#lokasi">Lokasi</a></li>
+    <li><a href="#lokasi" class="nav-cta">Kunjungi Kami</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#tentang" onclick="closeMobile()">Tentang Kami</a>
+  <a href="#menu" onclick="closeMobile()">Menu Lengkap</a>
+  <a href="#atmosfer" onclick="closeMobile()">Atmosfer</a>
+  <a href="#lokasi" onclick="closeMobile()">Lokasi & Jam Buka</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="beranda">
+  <div class="hero-bg"></div>
+  <div class="hero-circles">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+
+  <!-- Floating particles -->
+  <div id="particles"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Coffee & Eatery</div>
+
+    <svg class="hero-logo-large" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="58" stroke="#C4813A" stroke-width="1.5"/>
+      <circle cx="60" cy="60" r="52" stroke="#C4813A" stroke-width="0.5" stroke-dasharray="4 4"/>
+      <path d="M60 20C60 20 44 30 38 46C32 62 40 72 50 75C44 80 40 90 44 97C49 105 60 103 60 103C60 103 71 105 76 97C80 90 76 80 70 75C80 72 88 62 82 46C76 30 60 20 60 20Z" fill="#C4813A" opacity="0.12"/>
+      <path d="M60 23C60 23 46 32 41 46C36 60 43 70 50 73" stroke="#C4813A" stroke-width="2" stroke-linecap="round"/>
+      <path d="M60 23C60 23 74 32 79 46C84 60 77 70 70 73" stroke="#C4813A" stroke-width="2" stroke-linecap="round"/>
+      <ellipse cx="60" cy="57" rx="14" ry="20" stroke="#C4813A" stroke-width="2"/>
+      <ellipse cx="60" cy="57" rx="6" ry="9" fill="#C4813A" opacity="0.4"/>
+      <circle cx="60" cy="57" r="3" fill="#C4813A" opacity="0.8"/>
+      <path d="M50 73C50 73 46 82 48 90C51 98 60 97 60 97C60 97 69 98 72 90C74 82 70 73 70 73" stroke="#C4813A" stroke-width="2" stroke-linecap="round"/>
+      <path d="M39 50C36 53 35 57 37 61" stroke="#C4813A" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M81 50C84 53 85 57 83 61" stroke="#C4813A" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+
+    <h1 class="hero-title">Rhino's<br><span class="italic">Coffee</span></h1>
+    <p class="hero-subtitle">& Eatery · Est. Jakarta</p>
+
+    <p class="hero-desc">
+      Tempat di mana setiap tegukan membawa cerita. Kopi pilihan, makanan lezat, dan suasana yang tak terlupakan — semua dalam satu tempat.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">
+        <span>Jelajahi Menu</span>
+        <span>→</span>
+      </a>
+      <a href="#lokasi" class="btn-outline">Temukan Kami</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="about-strip">
+  <div class="about-ticker" id="ticker">
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Specialty Coffee</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Filter Roast Premium</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Non-Coffee Artisan Drinks</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Matcha Premium Grade</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Nasi Goreng Original</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Western Food</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Snack Artisan</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Dimsum & Kulit Tahu</span></div>
+    <!-- Duplicate for infinite loop -->
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Specialty Coffee</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Filter Roast Premium</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Non-Coffee Artisan Drinks</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Matcha Premium Grade</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Nasi Goreng Original</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Western Food</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Snack Artisan</span></div>
+    <div class="ticker-item"><span class="ticker-dot"></span><span>Dimsum & Kulit Tahu</span></div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="tentang">
+  <div class="section-header fade-in">
+    <div class="section-eyebrow">Mengapa Rhino's</div>
+    <h2 class="section-title">Lebih dari Sekadar <span class="italic">Kafe</span></h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card fade-in fade-in-delay-1">
+      <span class="feature-icon">☕</span>
+      <h3 class="feature-title">Kopi Berkualitas</h3>
+      <p class="feature-desc">Dari espresso klasik hingga filter coffee premium — setiap cangkir diseduh dengan passion dan ketelitian tinggi.</p>
+    </div>
+    <div class="feature-card fade-in fade-in-delay-2">
+      <span class="feature-icon">🍜</span>
+      <h3 class="feature-title">Menu Nusantara</h3>
+      <p class="feature-desc">Nasi goreng, mie goreng, ifumie, kwetiau, dan berbagai hidangan lokal autentik yang memanjakan lidah.</p>
+    </div>
+    <div class="feature-card fade-in fade-in-delay-3">
+      <span class="feature-icon">🌿</span>
+      <h3 class="feature-title">Matcha Premium</h3>
+      <p class="feature-desc">Koleksi matcha eksklusif dari grade premium hingga Coconut Matcha Cloud yang creamy dan memukau.</p>
+    </div>
+    <div class="feature-card fade-in fade-in-delay-1">
+      <span class="feature-icon">🥐</span>
+      <h3 class="feature-title">Snack & Roti</h3>
+      <p class="feature-desc">Roti Bakar Choco Crunchy, French Fries, Pisang Goreng, Dimsum — camilan sempurna menemani kopi Anda.</p>
+    </div>
+    <div class="feature-card fade-in fade-in-delay-2">
+      <span class="feature-icon">🍝</span>
+      <h3 class="feature-title">Western Fusion</h3>
+      <p class="feature-desc">Spaghetti Aglio e Olio, Alfredo, Bolognese, hingga Crispy Chicken Steak — cita rasa barat di harga ramah.</p>
+    </div>
+    <div class="feature-card fade-in fade-in-delay-3">
+      <span class="feature-icon">✨</span>
+      <h3 class="feature-title">Atmosfer Nyaman</h3>
+      <p class="feature-desc">Desain interior modern dengan nuansa hangat, cocok untuk kerja, meeting, atau sekadar bersantai bersama kerabat.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="menu-container">
+    <div class="section-header fade-in">
+      <div class="section-eyebrow">Menu Kami</div>
+      <h2 class="section-title">Pilihan untuk Setiap <span class="italic">Momen</span></h2>
+    </div>
+
+    <!-- TABS -->
+    <div class="menu-tabs" role="tablist">
+      <button class="menu-tab active" onclick="switchTab('coffee')" role="tab">☕ Coffee</button>
+      <button class="menu-tab" onclick="switchTab('filter')" role="tab">🔍 Filter Coffee</button>
+      <button class="menu-tab" onclick="switchTab('noncoffee')" role="tab">🧋 Non-Coffee</button>
+      <button class="menu-tab" onclick="switchTab('matcha')" role="tab">🍵 Matcha</button>
+      <button class="menu-tab" onclick="switchTab('food')" role="tab">🍽️ Food</button>
+      <button class="menu-tab" onclick="switchTab('western')" role="tab">🍝 Western</button>
+      <button class="menu-tab" onclick="switchTab('snack')" role="tab">🥐 Snack</button>
+    </div>
+
+    <!-- COFFEE PANEL -->
+    <div class="menu-panel active" id="panel-coffee">
+      <div class="menu-category-title">Coffee</div>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Espresso</span></div>
+          <span class="menu-item-desc">Single shot espresso klasik yang kuat dan bold</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Espresso On The Rock</span><span class="menu-item-price">18k</span></div>
+          <span class="menu-item-desc">Espresso segar di atas es batu — menyegarkan</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Lungo</span><span class="menu-item-price">20k</span></div>
+          <span class="menu-item-desc">Espresso yang lebih panjang dan ringan</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Americano</span><span class="menu-item-price">23k</span></div>
+          <span class="menu-item-desc">Espresso diencerkan dengan air panas</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Cafe Latte</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Espresso dengan steamed milk yang lembut dan creamy</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Cappuccino</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Espresso, steamed milk, dan milk foam yang tebal</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Magic Latte</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Latte dengan sentuhan unik khas Rhino's</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Dirty Latte</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Espresso shot over cold milk</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Piccolo</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Mini latte dengan rasa kopi yang intens</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Aren Latte</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Latte manis dengan gula aren asli Nusantara</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Spanish</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Inspirasi kopi ala Spanyol yang kaya rasa</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Baby Rhino Coffee</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Signature drink khas Rhino's yang ramah di lidah</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Vanilla Latte</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Latte dengan aroma vanilla yang harum</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Hazelnut Latte</span><span class="menu-item-price">26k</span></div>
+          <span class="menu-item-desc">Latte dengan sirup hazelnut yang kaya dan nutty</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Caramel Latte</span><span class="menu-item-price">26k</span></div>
+          <span class="menu-item-desc">Latte manis dengan caramel drizzle yang menggoda</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Americano Coconut</span><span class="menu-item-price">28k</span></div>
+          <span class="menu-item-desc">Americano segar dengan milk kelapa yang unik</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Americano Apple</span><span class="menu-item-price">28k</span></div>
+          <span class="menu-item-desc">Americano bertemu kesegaran apel yang menyegarkan</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Americano Strawberry</span><span class="menu-item-price">28k</span></div>
+          <span class="menu-item-desc">Perpaduan espresso dan strawberry yang menarik</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Salted Caramel Iced Latte</span><span class="menu-item-price">28k</span></div>
+          <span class="menu-item-desc">Manis, asin, dingin — kombinasi sempurna</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Pistachio Latte</span><span class="menu-item-price">28k</span></div>
+          <span class="menu-item-desc">Latte dengan pistachio premium yang creamy</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Butterscotch Sea Salt Latte</span><span class="menu-item-price">30k</span></div>
+          <span class="menu-item-desc">Butterscotch rich dengan sentuhan garam laut</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Caramel Macchiato</span><span class="menu-item-price">30k</span></div>
+          <span class="menu-item-desc">Layered latte dengan caramel yang spektakuler</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Mont Blanc</span><span class="menu-item-price">35k</span></div>
+          <span class="menu-item-desc">Kreasi premium dengan chestnut dan krim</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTER COFFEE PANEL -->
+    <div class="menu-panel" id="panel-filter">
+      <div class="menu-category-title">Filter Coffee</div>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">V60</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Pour over V60 yang clean dan bright dengan single origin pilihan</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Japanese</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Gaya seduh Jepang — ringan, floral, dan elegan</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Cold Brew</span><span class="menu-item-price">30k</span></div>
+          <span class="menu-item-desc">Diseduh dingin selama 12 jam — smooth, low acid, menyegarkan</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- NON-COFFEE PANEL -->
+    <div class="menu-panel" id="panel-noncoffee">
+      <div class="menu-category-title">Non-Coffee</div>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Red Velvet Latte</span><span class="menu-item-price">–</span></div>
+          <span class="menu-item-desc">Latte merah khas dengan rasa creamy yang memikat</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Taro Latte</span><span class="menu-item-price">27k</span></div>
+          <span class="menu-item-desc">Latte ungu dari taro asli — manis dan creamy</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Strawberry Latte</span><span class="menu-item-price">26k</span></div>
+          <span class="menu-item-desc">Segar manis stroberi bertemu susu lembut</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Choco Latte</span><span class="menu-item-price">26k</span></div>
+          <span class="menu-item-desc">Cokelat premium yang kaya dan lembut di tenggorokan</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Lychee Ice Tea</span><span class="menu-item-price">27k</span></div>
+          <span class="menu-item-desc">Teh dingin dengan rasa leci segar yang menyegarkan</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Orange-Apple Tea</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Perpaduan jeruk dan apel dalam teh yang menyegarkan</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Green Apple Tea</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Teh hijau dengan apel hijau yang asam segar</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Lemon Tea</span><span class="menu-item-price">28k</span></div>
+          <span class="menu-item-desc">Klasik teh lemon yang selalu nikmat</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Strawberry Tea</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Teh dengan stroberi segar yang manis</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Mango Apple Yakult</span><span class="menu-item-price">22k</span></div>
+          <span class="menu-item-desc">Manga + apel + yakult = segar maksimal</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Strawberry Yakult</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Favorit banyak orang — stroberi dan yakult yang tangy</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Peach Orange Yakult</span><span class="menu-item-price">30k</span></div>
+          <span class="menu-item-desc">Peach, jeruk, dan yakult — trio buah yang menakjubkan</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Fresa Con Pina</span><span class="menu-item-price">30k</span></div>
+          <span class="menu-item-desc">Stroberi dengan nanas — tropical dan refreshing</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Apple Mojito</span><span class="menu-item-price">30k</span></div>
+          <span class="menu-item-desc">Mojito apel non-alkohol yang segar dan kekinian</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MATCHA PANEL -->
+    <div class="menu-panel" id="panel-matcha">
+      <div class="menu-category-title">Matcha</div>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Matcha Latte</span></div>
+          <span class="menu-item-desc">Matcha latte klasik yang smooth dan earthy</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Dirty Matcha</span></div>
+          <span class="menu-item-desc">Matcha latte dengan shot espresso — double hit energi</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Matcha Latte (Premium Grade)</span><span class="menu-item-price">25k</span></div>
+          <span class="menu-item-desc">Menggunakan matcha premium pilihan untuk rasa terbaik</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Strawberry Matcha Latte</span><span class="menu-item-price">30k</span></div>
+          <span class="menu-item-desc">Layer cantik hijau dan merah — Instagram-worthy & delicious</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Ube Matcha Latte</span><span class="menu-item-price">35k</span></div>
+          <span class="menu-item-desc">Perpaduan ubi ungu dan matcha yang memukau visual</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Coconut Matcha Cloud</span><span class="menu-item-price">45k</span></div>
+          <span class="menu-item-desc">✨ Signature — matcha dengan cloud foam kelapa yang dreamy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOD PANEL -->
+    <div class="menu-panel" id="panel-food">
+      <div class="menu-category-title">Food</div>
+
+      <div class="menu-subcategory">
+        <div class="menu-subcategory-title">Nasi Goreng</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Goreng Original</span><span class="menu-item-price">22k</span></div>
+            <span class="menu-item-desc">Nasi goreng klasik dengan bumbu rahasia Rhino's</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Goreng Kampung</span><span class="menu-item-price">22k</span></div>
+            <span class="menu-item-desc">Resep kampung autentik dengan cita rasa desa</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Goreng Cabai Hijau</span><span class="menu-item-price">22k</span></div>
+            <span class="menu-item-desc">Pedas segar dengan cabai hijau pilihan</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Goreng Seafood</span><span class="menu-item-price">–</span></div>
+            <span class="menu-item-desc">Nasi goreng komplit dengan aneka seafood segar</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-subcategory">
+        <div class="menu-subcategory-title">Mie & Kwetiau</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Mie Goreng Original</span><span class="menu-item-price">30k</span></div>
+            <span class="menu-item-desc">Mie goreng klasik bumbu special</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Mie Goreng Seafood</span><span class="menu-item-price">22k</span></div>
+            <span class="menu-item-desc">Mie goreng dengan topping seafood melimpah</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Ifumie Goreng Original</span><span class="menu-item-price">28k</span></div>
+            <span class="menu-item-desc">Ifumie garing dengan bumbu goreng khas</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Ifumie Goreng Seafood</span><span class="menu-item-price">22k</span></div>
+            <span class="menu-item-desc">Ifumie crispy dengan seafood pilihan</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Kwetiau Goreng Original</span><span class="menu-item-price">28k</span></div>
+            <span class="menu-item-desc">Kwetiau lebar dengan bumbu kecap spesial</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Kwetiau Goreng Seafood</span><span class="menu-item-price">22k</span></div>
+            <span class="menu-item-desc">Kwetiau dengan seafood segar berkualitas</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Indomie Goreng</span><span class="menu-item-price">30k</span></div>
+            <span class="menu-item-desc">Klasik Indonesia dengan topping spesial Rhino's</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Indomie Kuah</span><span class="menu-item-price">17k</span></div>
+            <span class="menu-item-desc">Hangat dan comforting untuk hari yang panjang</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-subcategory">
+        <div class="menu-subcategory-title">Nasi Ayam & Sapi</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Ayam Blackpepper</span><span class="menu-item-price">30k</span></div>
+            <span class="menu-item-desc">Ayam dengan saus blackpepper yang intense</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Ayam Saus Mentega</span><span class="menu-item-price">30k</span></div>
+            <span class="menu-item-desc">Ayam dengan saus mentega yang buttery dan lembut</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Ayam Asam Manis</span><span class="menu-item-price">33k</span></div>
+            <span class="menu-item-desc">Perpaduan asam manis yang sempurna</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Sapi Blackpepper</span><span class="menu-item-price">30k</span></div>
+            <span class="menu-item-desc">Daging sapi dengan saus lada hitam yang kaya</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Ayam Chili Padi</span><span class="menu-item-price">33k</span></div>
+            <span class="menu-item-desc">Pedas ekstrem dari cabai rawit — untuk jiwa pemberani</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Ayam Sambal Matah</span><span class="menu-item-price">33k</span></div>
+            <span class="menu-item-desc">Ayam dengan sambal matah Bali yang segar dan aromatik</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Ayam Rica-Rica</span><span class="menu-item-price">33k</span></div>
+            <span class="menu-item-desc">Rica-rica Manado yang pedas dan bumbu rempah kaya</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Ayam Geprek</span><span class="menu-item-price">28k</span></div>
+            <span class="menu-item-desc">Ayam crispy geprek dengan sambal level pilihanmu</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Ayam Bakar</span><span class="menu-item-price">25k</span></div>
+            <span class="menu-item-desc">Ayam bakar arang dengan bumbu kecap manis</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Nasi Ayam Penyet</span><span class="menu-item-price">35k</span></div>
+            <span class="menu-item-desc">Ayam penyet dengan sambel terasi yang autentik</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Grilled Chicken Steak</span><span class="menu-item-price">25k</span></div>
+            <span class="menu-item-desc">Dada ayam panggang dengan saus mushroom atau BBQ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WESTERN PANEL -->
+    <div class="menu-panel" id="panel-western">
+      <div class="menu-category-title">Western</div>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Spaghetti Aglio E Olio</span><span class="menu-item-price">28k</span></div>
+          <span class="menu-item-desc">Klasik Italia — bawang putih, olive oil, dan chili flakes</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Spaghetti Alfredo</span><span class="menu-item-price">30k</span></div>
+          <span class="menu-item-desc">Saus creamy Alfredo dengan parmesan yang lumer</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Spaghetti Bolognese</span><span class="menu-item-price">30k</span></div>
+          <span class="menu-item-desc">Saus daging cincang merah yang kaya dan hearty</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-top"><span class="menu-item-name">Crispy Chicken Steak</span><span class="menu-item-price">38k</span></div>
+          <span class="menu-item-desc">Chicken steak crispy dengan saus mushroom dan french fries</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SNACK PANEL -->
+    <div class="menu-panel" id="panel-snack">
+      <div class="menu-category-title">Snack</div>
+
+      <div class="menu-subcategory">
+        <div class="menu-subcategory-title">Roti & Bread</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">French Bread</span><span class="menu-item-price">–</span></div>
+            <span class="menu-item-desc">Roti Prancis garing di luar, lembut di dalam</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Mix Pizza</span><span class="menu-item-price">18k</span></div>
+            <span class="menu-item-desc">Mini pizza dengan topping mix yang komplit</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Roti Bakar Saus Srikaya</span><span class="menu-item-price">–</span></div>
+            <span class="menu-item-desc">Roti bakar klasik dengan srikaya pandan yang harum</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Roti Bakar Choco Crunchy</span><span class="menu-item-price">–</span></div>
+            <span class="menu-item-desc">Roti bakar dengan cokelat crispy yang adiktif</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Roti Bakar Peanut Butter</span><span class="menu-item-price">–</span></div>
+            <span class="menu-item-desc">Roti panggang dengan peanut butter creamy</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Peanut Butter Toast</span><span class="menu-item-price">–</span></div>
+            <span class="menu-item-desc">Toast premium dengan peanut butter lapis tebal</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-subcategory">
+        <div class="menu-subcategory-title">Gorengan & Snack</div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Potato Wedges</span><span class="menu-item-price">20k</span></div>
+            <span class="menu-item-desc">Kentang wedges seasoned dengan bumbu special</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Ubi Goreng</span><span class="menu-item-price">20k</span></div>
+            <span class="menu-item-desc">Ubi goreng manis alami yang crispy</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Pisang Goreng Coklat Keju</span><span class="menu-item-price">20k</span></div>
+            <span class="menu-item-desc">Pisang goreng dengan cokelat dan keju mozzarella</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Pisang Goreng Srikaya</span><span class="menu-item-price">15k</span></div>
+            <span class="menu-item-desc">Pisang goreng dengan saus srikaya pandan</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Tum Rumput Laut</span><span class="menu-item-price">–</span></div>
+            <span class="menu-item-desc">Cemilan rumput laut yang renyah dan ringan</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Dimsum Ayam</span><span class="menu-item-price">20k</span></div>
+            <span class="menu-item-desc">Dimsum ayam lembut kukus dengan saus spesial</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top"><span class="menu-item-name">Lumpia Kulit Tahu</span><span class="menu-item-price">22k</span></div>
+            <span class="menu-item-desc">Lumpia crispy dengan kulit tahu yang unik dan gurih</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ATMOSPHERE -->
+<section class="atmosphere" id="atmosfer">
+  <div class="atm-container">
+    <div class="section-header fade-in">
+      <div class="section-eyebrow">Tempatnya</div>
+      <h2 class="section-title">Suasana yang <span class="italic">Menginspirasi</span></h2>
+    </div>
+
+    <div class="atm-grid fade-in">
+      <div class="atm-card" style="background: linear-gradient(135deg, #2C1A0A 0%, #1A0F00 100%);">
+        <div class="atm-pattern atm-pattern-1"></div>
+        <div class="atm-number">01</div>
+        <div class="atm-card-content">
+          <div class="atm-card-label">Ruang Utama</div>
+          <div class="atm-card-title">Hangat &<br>Elegan</div>
+        </div>
+      </div>
+      <div class="atm-card" style="background: linear-gradient(135deg, #3D2010 0%, #2C1A0A 100%);">
+        <div class="atm-pattern atm-pattern-2"></div>
+        <div class="atm-number">02</div>
+        <div class="atm-card-content">
+          <div class="atm-card-label">Bar Counter</div>
+          <div class="atm-card-title">Craft in Every Cup</div>
+        </div>
+      </div>
+      <div class="atm-card" style="background: linear-gradient(135deg, #1A0F00 0%, #2C1A0A 100%);">
+        <div class="atm-pattern atm-pattern-3"></div>
+        <div class="atm-number">03</div>
+        <div class="atm-card-content">
+          <div class="atm-card-label">Work Space</div>
+          <div class="atm-card-title">Produktif & Nyaman</div>
+        </div>
+      </div>
+      <div class="atm-card" style="background: linear-gradient(135deg, #4A2C10 0%, #2C1A0A 100%);">
+        <div class="atm-pattern atm-pattern-4"></div>
+        <div class="atm-number">04</div>
+        <div class="atm-card-content">
+          <div class="atm-card-label">Outdoor</div>
+          <div class="atm-card-title">Udara Segar & Kopi Nikmat</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat-item fade-in">
+      <div class="stat-num" data-target="50">0+</div>
+      <div class="stat-label">Menu Pilihan</div>
+    </div>
+    <div class="stat-item fade-in fade-in-delay-1">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Bahan Segar</div>
+    </div>
+    <div class="stat-item fade-in fade-in-delay-2">
+      <div class="stat-num">5★</div>
+      <div class="stat-label">Rating Pelanggan</div>
+    </div>
+    <div class="stat-item fade-in fade-in-delay-3">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Lokasi Eksklusif</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="ulasan">
+  <div class="testimonials-container">
+    <div class="section-header fade-in">
+      <div class="section-eyebrow">Kata Mereka</div>
+      <h2 class="section-title">Pengalaman yang <span class="italic">Tak Terlupakan</span></h2>
+    </div>
+    <div class="testimonials-track">
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-quote">"</div>
+        <div class="testimonial-text">Coconut Matcha Cloud-nya juara banget! Beneran nggak bisa berhenti nyobain. Tempatnya juga bikin betah, cocok buat nugas sambil ngopi seharian.</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="author-name">Anisa R.</div>
+            <div class="author-title">Pelanggan Setia</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in fade-in-delay-1">
+        <div class="testimonial-quote">"</div>
+        <div class="testimonial-text">Nasi Goreng Cabai Hijaunya the best! Abis makan langsung pesan kopi, Butterscotch Sea Salt Latte-nya perfectly balanced. Harga juga worth it banget.</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">D</div>
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="author-name">Dimas F.</div>
+            <div class="author-title">Food Enthusiast</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in fade-in-delay-2">
+        <div class="testimonial-quote">"</div>
+        <div class="testimonial-text">Cold Brew-nya smooth banget, nggak pahit sama sekali. Lumpia Kulit Tahu-nya unik dan enak. Rhino's jadi café favorit buat work from café setiap minggu!</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">S</div>
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="author-name">Sarah M.</div>
+            <div class="author-title">Remote Worker</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location" id="lokasi">
+  <div class="location-container">
+    <div class="location-info">
+      <div class="section-header">
+        <div class="section-eyebrow">Temukan Kami</div>
+        <h2 class="section-title">Kunjungi <span class="italic">Rhino's</span></h2>
+      </div>
+
+      <div class="info-block fade-in">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Alamat</div>
+          <div class="info-value">Rhino's Coffee & Eatery<br>@rhinos.coffee</div>
+        </div>
+      </div>
+
+      <div class="info-block fade-in fade-in-delay-1">
+        <div class="info-icon">🕐</div>
+        <div>
+          <div class="info-label">Jam Operasional</div>
+          <div class="info-value">
+            Senin – Jumat: 08.00 – 22.00<br>
+            Sabtu – Minggu: 08.00 – 23.00
+          </div>
+        </div>
+      </div>
+
+      <div class="info-block fade-in fade-in-delay-2">
+        <div class="info-icon">📱</div>
+        <div>
+          <div class="info-label">Media Sosial & Web</div>
+          <div class="info-value">
+            Instagram: @rhinos.coffee<br>
+            rhinos.coffee
+          </div>
+        </div>
+      </div>
+
+      <div class="info-block fade-in fade-in-delay-3">
+        <div class="info-icon">☕</div>
+        <div>
+          <div class="info-label">Layanan</div>
+          <div class="info-value">Dine In · Take Away · WiFi Gratis · Colokan Tersedia</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="location-map fade-in">
+      <div class="map-grid"></div>
+      <div class="map-placeholder">
+        <div class="map-placeholder-icon">📍</div>
+        <div class="map-placeholder-text">Rhino's Coffee & Eatery</div>
+        <div class="map-placeholder-sub">Klik untuk buka di Google Maps</div>
+        <a href="https://maps.google.com/search/rhinos.coffee" target="_blank" class="btn-primary" style="display:inline-flex; justify-content:center;">
+          Buka Maps →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg width="32" height="32" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="38" stroke="#C4813A" stroke-width="1"/>
+            <path d="M40 12C40 12 28 20 24 30C20 40 26 48 32 50C28 54 25 60 28 65C32 70 40 68 40 68C40 68 48 70 52 65C55 60 52 54 48 50C54 48 60 40 56 30C52 20 40 12 40 12Z" fill="#C4813A" opacity="0.2"/>
+            <ellipse cx="40" cy="38" rx="10" ry="14" stroke="#C4813A" stroke-width="1.5"/>
+            <circle cx="40" cy="38" r="4" fill="#C4813A" opacity="0.7"/>
+          </svg>
+          <div class="footer-logo-text">
+            Rhino's
+            <span>Coffee & Eatery</span>
+          </div>
+        </div>
+        <p class="footer-tagline">"Every cup tells a story, every bite creates a memory."</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/rhinos.coffee" target="_blank" class="social-btn" title="Instagram">📸</a>
+          <a href="https://rhinos.coffee" target="_blank" class="social-btn" title="Website">🌐</a>
+          <a href="#" class="social-btn" title="WhatsApp">💬</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Menu</div>
+        <ul class="footer-links">
+          <li><a href="#menu" onclick="switchTab('coffee')">Coffee</a></li>
+          <li><a href="#menu" onclick="switchTab('filter')">Filter Coffee</a></li>
+          <li><a href="#menu" onclick="switchTab('noncoffee')">Non-Coffee</a></li>
+          <li><a href="#menu" onclick="switchTab('matcha')">Matcha</a></li>
+          <li><a href="#menu" onclick="switchTab('food')">Food</a></li>
+          <li><a href="#menu" onclick="switchTab('western')">Western</a></li>
+          <li><a href="#menu" onclick="switchTab('snack')">Snack</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Navigasi</div>
+        <ul class="footer-links">
+          <li><a href="#beranda">Beranda</a></li>
+          <li><a href="#tentang">Tentang</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#atmosfer">Atmosfer</a></li>
+          <li><a href="#ulasan">Ulasan</a></li>
+          <li><a href="#lokasi">Lokasi</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Info</div>
+        <ul class="footer-links">
+          <li><a href="#">Jam Buka</a></li>
+          <li><a href="#">Reservasi</a></li>
+          <li><a href="#">Catering</a></li>
+          <li><a href="#">Kerjasama</a></li>
+          <li><a href="https://instagram.com/rhinos.coffee" target="_blank">@rhinos.coffee</a></li>
+          <li><a href="https://rhinos.coffee" target="_blank">rhinos.coffee</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Rhino's Coffee & Eatery. All rights reserved.</div>
+      <div class="footer-badge">
+        <span class="badge-dot"></span>
+        <span>Buka Sekarang · 08.00 – 22.00</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== NAV SCROLL =====
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+}, { passive: true });
+
+// ===== HAMBURGER =====
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  if (mobileMenu.classList.contains('open')) {
+    mobileMenu.classList.remove('open');
+    setTimeout(() => { mobileMenu.style.display = 'none'; }, 300);
+  } else {
+    mobileMenu.style.display = 'block';
+    requestAnimationFrame(() => mobileMenu.classList.add('open'));
+  }
+});
+
+function closeMobile() {
+  hamburger.classList.remove('active');
+  mobileMenu.classList.remove('open');
+  setTimeout(() => { mobileMenu.style.display = 'none'; }, 300);
+}
+
+// ===== MENU TABS =====
+function switchTab(tab) {
+  // Update buttons
+  document.querySelectorAll('.menu-tab').forEach((btn, i) => {
+    const tabs = ['coffee','filter','noncoffee','matcha','food','western','snack'];
+    btn.classList.toggle('active', tabs[i] === tab);
+  });
+  // Update panels
+  document.querySelectorAll('.menu-panel').forEach(panel => {
+    panel.classList.toggle('active', panel.id === 'panel-' + tab);
+  });
+  // Scroll to menu
+  document.getElementById('menu').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ===== FADE IN ON SCROLL =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ===== PARTICLES =====
+const particlesContainer = document.getElementById('particles');
+function createParticle() {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.cssText = `
+    left: ${Math.random() * 100}%;
+    bottom: ${Math.random() * 30}%;
+    animation-duration: ${3 + Math.random() * 4}s;
+    animation-delay: ${Math.random() * 3}s;
+    width: ${1 + Math.random() * 3}px;
+    height: ${1 + Math.random() * 3}px;
+    opacity: 0;
+  `;
+  particlesContainer.appendChild(p);
+  setTimeout(() => p.remove(), 8000);
+}
+setInterval(createParticle, 600);
+
+// ===== SMOOTH ANCHOR =====
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    const href = link.getAttribute('href');
+    if (href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  });
+});
+
+// ===== PRELOAD COMPLETE =====
+document.body.style.opacity = '0';
+document.body.style.transition = 'opacity 0.5s ease';
+window.addEventListener('load', () => {
+  document.body.style.opacity = '1';
+});
+</script>
+</body>
+</html>
